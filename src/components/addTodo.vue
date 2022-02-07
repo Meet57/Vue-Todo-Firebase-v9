@@ -31,8 +31,10 @@ export default {
     },
     methods: {
         addTodo() {
-            this.$store.commit("addTodo", this.task);
-            this.task = { todo: "", status: false };
+            if (this.todo !== "") {
+                this.$store.commit("addTodo", this.task);
+                this.task = { todo: "", status: false };
+            }
         },
     },
 };
