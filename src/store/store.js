@@ -17,7 +17,16 @@ export const store = new Vuex.Store({
             return state.todos.length;
         },
         AllTodos(state) {
-            return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? -1 : 1));
+            return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? 1 : -1));
+        },
+        incompleteTask(state) {
+            let i = 0;
+            state.todos.forEach((task) => {
+                if (!task.status) {
+                    i++;
+                }
+            });
+            return i;
         },
     },
     mutations: {

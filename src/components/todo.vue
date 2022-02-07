@@ -5,7 +5,7 @@
         <td class="px-3 py-2 text-center">
             <i
                 class="far fa-check-circle fa-lg"
-                :style="[row.status ? { color: 'pink' } : { color: 'cyan' }]"
+                :style="[row.status ? { color: 'cyan' } : { color: 'pink' }]"
                 v-on:click="toggleStatus(row.id)"
             ></i>
         </td>
