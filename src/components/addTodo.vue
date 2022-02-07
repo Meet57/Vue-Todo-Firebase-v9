@@ -4,12 +4,12 @@
         <div class="">
             <input
                 type="text"
-                class="rounded-tl-lg rounded-bl-lg bg-green-500 text-white placeholder-white px-3 py-3 focus:bg-green-700"
+                class="rounded-tl-lg rounded-bl-lg bg-blue-400 text-white placeholder-white px-3 py-3 focus:bg-blue-500"
                 placeholder="Todos"
                 v-model="task.todo"
             />
             <button
-                class="rounded-tr-lg rounded-br-lg hover:bg-green-700 bg-green-500 text-white px-4 py-3 border-l-2 border-white"
+                class="rounded-tr-lg rounded-br-lg hover:bg-blue-500 bg-blue-400 text-white px-4 py-3 border-l-2 border-white"
                 v-on:click="addTodo"
             >
                 Add
@@ -24,16 +24,15 @@ export default {
     data() {
         return {
             task: {
-                id: Date.now(),
                 todo: "",
                 status: false,
             },
         };
     },
     methods: {
-        addTodo(){
-            this.$store.commit('addTodo',this.task)
-        }
+        addTodo() {
+            this.$store.commit("addTodo", this.task);
+        },
     },
 };
 </script>

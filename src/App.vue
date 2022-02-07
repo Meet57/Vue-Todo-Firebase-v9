@@ -28,6 +28,9 @@ export default {
             return this.$store.getters.numberOftodos;
         },
     },
+    created(){
+        this.$store.commit('getTodo')
+    }
 };
 </script>
 
