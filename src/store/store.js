@@ -22,7 +22,15 @@ export const store = new Vuex.Store({
     },
     mutations: {
         addTodo(state, data) {
-            addDoc(db, { ...data, createdAt: serverTimestamp() });
+            let add = true;
+            state.todos.forEach((task) => {
+                if (task.todo.toUpperCase() == data.todo.toUpperCase()) {
+                    add = false;
+                }
+            });
+            if (add) {
+                addDoc(db, { ...data, createdAt: serverTimestamp() });
+            }
         },
         getTodo(state) {
             onSnapshot(db, (snapshot) => {
