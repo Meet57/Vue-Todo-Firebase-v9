@@ -9,6 +9,7 @@
             </div>
         </div>
         <div class="container mx-auto my-7">
+            <alert />
             <add-todo />
             <todos />
         </div>
@@ -18,12 +19,14 @@
 <script>
 import todos from "./components/todos.vue";
 import addTodo from "./components/addTodo.vue";
+import alert from "./components/Alert.vue";
 
 export default {
     name: "Main",
     components: {
         todos: todos,
         addTodo,
+        alert,
     },
     computed: {
         noOfTodos() {
@@ -39,4 +42,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+li,
+i {
+    cursor: pointer;
+}
+</style>

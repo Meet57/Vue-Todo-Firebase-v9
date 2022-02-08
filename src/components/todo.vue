@@ -29,6 +29,12 @@
                 >
                     Update
                 </button>
+                <button
+                    class="ml-2 border-red-400 border px-3 py-0.5 rounded transition-all text-red-500 hover:border-transparent hover:bg-red-500 hover:text-white focus:outline-none"
+                    v-on:click="toogleEdit"
+                >
+                    Cancel
+                </button>
             </template>
             <template v-else>
                 <i
@@ -60,6 +66,11 @@ export default {
             todo: this.row.todo,
         };
     },
+    computed: {
+        AllTodos() {
+            return this.$store.getters.AllTodos;
+        },
+    },
     methods: {
         toggleStatus(id) {
             this.$store.commit("toogleStatus", { id, status: this.row.status });
@@ -71,8 +82,22 @@ export default {
             this.edit = !this.edit;
         },
         updateTodo() {
-            this.edit = !this.edit;
-            this.$store.commit("updateTodo", { todo: this.todo, id: this.row.id });
+            if (this.todo !== "") {
+                let update = true;
+                this.AllTodos.map((t) => {
+                    if (t.todo.toUpperCase() == this.todo.toUpperCase()) {
+                        update = false;
+                    }
+                });
+                if (update) {
+                    this.edit = !this.edit;
+                    this.$store.commit("updateTodo", { todo: this.todo, id: this.row.id });
+                } else {
+                    this.$store.commit("updateAlert", { text: "Todo Repeated" });
+                }
+            } else {
+                this.$store.commit("updateAlert", { text: "Please enter some text" });
+            }
         },
     },
 };

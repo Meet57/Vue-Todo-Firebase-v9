@@ -1,7 +1,7 @@
 <template>
     <div class="my-5">
         <p class="mb-2 text-black text-2xl">Add todo</p>
-        <div class="">
+        <form class="">
             <input
                 type="text"
                 class="rounded-tl-lg rounded-bl-lg bg-blue-400 text-white placeholder-white px-3 py-3 focus:bg-blue-500"
@@ -10,11 +10,12 @@
             />
             <button
                 class="rounded-tr-lg rounded-br-lg hover:bg-blue-500 bg-blue-400 text-white px-4 py-3 border-l-2 border-white"
-                v-on:click="addTodo"
+                v-on:click.prevent="addTodo"
+                type="submit"
             >
                 Add
             </button>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -29,12 +30,31 @@ export default {
             },
         };
     },
+    computed: {
+        AllTodos() {
+            return this.$store.getters.AllTodos;
+        },
+    },
     methods: {
         addTodo() {
             if (this.task.todo !== "") {
-                this.$store.commit("addTodo", this.task);
-                this.task = { todo: "", status: false };
+                let add = true;
+                this.AllTodos.map((t) => {
+                    if (t.todo.toUpperCase() == this.task.todo.toUpperCase()) {
+                        add = false;
+                    }
+                });
+                if (add) {
+                    this.$store.commit("addTodo", this.task);
+                    this.task = { todo: "", status: false };
+                } else {
+                    this.$store.commit("updateAlert", { text: "Todo Repeated" });
+                }
+            } else {
+                this.$store.commit("updateAlert", { text: "Please enter some text" });
             }
+            // if (this.task.todo !== "") {
+            // }
         },
     },
 };

@@ -11,8 +11,12 @@ export const store = new Vuex.Store({
     // This will restrict outside files to edit Vuex store
     state: {
         todos: [],
+        alert: "",
     },
     getters: {
+        getAlert(state) {
+            return state.alert;
+        },
         numberOftodos(state) {
             return state.todos.length;
         },
@@ -30,16 +34,14 @@ export const store = new Vuex.Store({
         },
     },
     mutations: {
+        updateAlert(state, payload) {
+            state.alert = payload.text;
+            setTimeout(() => {
+                state.alert = "";
+            }, 3000);
+        },
         addTodo(state, data) {
-            let add = true;
-            state.todos.forEach((task) => {
-                if (task.todo.toUpperCase() == data.todo.toUpperCase()) {
-                    add = false;
-                }
-            });
-            if (add) {
-                addDoc(db, { ...data, createdAt: serverTimestamp() });
-            }
+            addDoc(db, { ...data, createdAt: serverTimestamp() });
         },
         getTodo(state) {
             onSnapshot(db, (snapshot) => {
@@ -55,6 +57,19 @@ export const store = new Vuex.Store({
         updateTodo(state, payload) {
             let docRef = doc(db, payload.id);
             updateDoc(docRef, { todo: payload.todo });
+            // let update = true;
+            // state.todos.forEach((task) => {
+            //     if (task.todo.toUpperCase() == payload.todo.toUpperCase()) {
+            //         update = false;
+            //     }
+            // });
+            // if (update) {
+            // } else {
+            //     state.alert = "Todo Already Exist";
+            //     setTimeout(() => {
+            //         state.alert = "";
+            //     }, 3000);
+            // }
         },
         toogleStatus(state, payload) {
             let docRef = doc(db, payload.id);
