@@ -86,7 +86,9 @@ export default {
                 let update = true;
                 this.AllTodos.map((t) => {
                     if (t.todo.toUpperCase() == this.todo.toUpperCase()) {
-                        update = false;
+                        if (t.id != this.row.id) {
+                            update = false;
+                        }
                     }
                 });
                 if (update) {

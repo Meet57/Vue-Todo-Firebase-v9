@@ -24,7 +24,7 @@
                 </li>
             </ul>
         </div>
-        <table v-if="noOfTodos > 0" class="table-auto w-full rounded-full">
+        <table v-if="AllTodos.length > 0" class="table-auto w-full rounded-full">
             <tr class="p-3 bg-gray-300">
                 <th class="text-left px-5 py-3">ID</th>
                 <th class="text-left px-5 py-3">TODO</th>
@@ -33,7 +33,12 @@
             </tr>
             <todo v-for="row in AllTodos" :key="row.id" :row="row" />
         </table>
-        <div v-else class="text-red-500 text-lg">Todos Loading || No Todos</div>
+        <div
+            v-else
+            class="bg-blue-100 w-1/5 text-center p-3 m-3 text-blue-800 text-xs font-semibold mr-2 rounded dark:bg-blue-200 dark:text-blue-800"
+        >
+            No Todo Here
+        </div>
     </div>
 </template>
 
