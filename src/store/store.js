@@ -43,7 +43,7 @@ export const store = new Vuex.Store({
         },
         getTodo(state) {
             onSnapshot(db, (snapshot) => {
-                var todos = [];
+                let todos = [];
                 let i = 1;
                 snapshot.docs.forEach((doc) => {
                     todos.push({ ...doc.data(), id: doc.id, number: i });
@@ -52,8 +52,12 @@ export const store = new Vuex.Store({
                 state.todos = todos;
             });
         },
+        updateTodo(state, payload) {
+            let docRef = doc(db, payload.id);
+            updateDoc(docRef, { todo: payload.todo });
+        },
         toogleStatus(state, payload) {
-            var docRef = doc(db, payload.id);
+            let docRef = doc(db, payload.id);
             updateDoc(docRef, { status: !payload.status });
         },
         deleteTodo(state, payload) {
