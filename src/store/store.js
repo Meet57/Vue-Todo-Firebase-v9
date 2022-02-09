@@ -24,6 +24,12 @@ export const store = new Vuex.Store({
         numberOftodos(state) {
             return state.todos.length;
         },
+        completedTasks(state) {
+            return state.todos.filter((todo) => !todo.status);
+        },
+        incompletedTasks(state) {
+            return state.todos.filter((todo) => todo.status);
+        },
         AllTodos(state) {
             return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? 1 : -1));
         },

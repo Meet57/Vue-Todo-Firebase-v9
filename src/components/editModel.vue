@@ -24,6 +24,7 @@
                     class="ml-2 border-red-400 border px-3 py-0.5 rounded transition-all text-red-500 hover:border-transparent hover:bg-red-500 hover:text-white focus:outline-none"
                     type="cancel"
                     v-on:click="cancelTodo"
+                    @keyup.esc="$emit('cancelTodo')"
                 >
                     Cancel
                 </button>
