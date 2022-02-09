@@ -1,4 +1,13 @@
-import { addDoc, deleteDoc, doc, onSnapshot, updateDoc, serverTimestamp } from "firebase/firestore";
+import {
+    addDoc,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    updateDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+} from "firebase/firestore";
 import Vue from "vue";
 import Vuex from "vuex";
 import db from "../firebase";
@@ -54,7 +63,8 @@ export const store = new Vuex.Store({
             addDoc(db, { ...data, createdAt: serverTimestamp() });
         },
         getTodo(state) {
-            onSnapshot(db, (snapshot) => {
+            const q = query(db, orderBy("createdAt"));
+            onSnapshot(q, (snapshot) => {
                 let todos = [];
                 let i = 1;
                 snapshot.docs.forEach((doc) => {
