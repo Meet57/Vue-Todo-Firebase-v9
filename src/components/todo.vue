@@ -12,16 +12,27 @@
             ></i>
         </td>
         <td class="px-3 py-2">
-            <i
-                class="far fa-edit fa-lg mr-3"
-                :style="{ color: '#5ef7ff' }"
-                v-on:click="editTodo()"
-            ></i>
-            <i
-                class="far fa-trash-alt fa-lg"
-                :style="{ color: '#ff5e5e' }"
-                v-on:click="deleteTodo(row.id)"
-            ></i>
+            <template v-if="!del">
+                <i
+                    class="far fa-edit fa-lg mr-3"
+                    :style="{ color: '#5ef7ff' }"
+                    v-on:click="editTodo()"
+                ></i>
+                <i
+                    class="far fa-trash-alt fa-lg"
+                    :style="{ color: '#ff5e5e' }"
+                    v-on:click="toogleDelete()"
+                ></i>
+            </template>
+            <template v-else>
+                <p>Do you want to delete it ?</p>
+                <i class="fas fa-check text-2xl" style="color: red" v-on:click="deleteTodo"></i>
+                <i
+                    class="fas fa-times text-2xl ml-2"
+                    style="color: lightgreen"
+                    v-on:click="toogleDelete"
+                ></i>
+            </template>
         </td>
     </tr>
 </template>
@@ -36,6 +47,7 @@ export default {
     },
     data() {
         return {
+            del: false,
             todo: this.row.todo,
         };
     },
@@ -48,8 +60,11 @@ export default {
         toggleStatus(id) {
             this.$store.commit("toogleStatus", { id, status: this.row.status });
         },
-        deleteTodo(id) {
-            this.$store.commit("deleteTodo", { id: id });
+        toogleDelete() {
+            this.del = !this.del;
+        },
+        deleteTodo() {
+            this.$store.commit("deleteTodo", { id: this.row.id });
         },
         editTodo() {
             this.$store.commit("editTodo", this.row);

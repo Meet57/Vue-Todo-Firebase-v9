@@ -24,12 +24,12 @@
                 </li>
             </ul>
         </div>
-        <table v-if="AllTodos.length > 0" class="table-auto w-full rounded-full">
+        <table v-if="AllTodos.length > 0" class="w-full rounded-full">
             <tr class="p-3 bg-gray-300">
-                <th class="text-left px-5 py-3">ID</th>
-                <th class="text-left px-5 py-3">TODO</th>
-                <th class="text-left px-5 py-3">STATUS</th>
-                <th class="text-left px-5 py-3">ACTIONS</th>
+                <th class="text-left px-5 py-3 w-1/5">ID</th>
+                <th class="text-left px-5 py-3 w-2/5">TODO</th>
+                <th class="text-left px-5 py-3 w-1/5">STATUS</th>
+                <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
             </tr>
             <todo v-for="row in AllTodos" :key="row.id" :row="row" />
         </table>
