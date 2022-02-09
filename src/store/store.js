@@ -12,10 +12,14 @@ export const store = new Vuex.Store({
     state: {
         todos: [],
         alert: "",
+        editComponent: null,
     },
     getters: {
         getAlert(state) {
             return state.alert;
+        },
+        getEditDetails(state) {
+            return state.editComponent;
         },
         numberOftodos(state) {
             return state.todos.length;
@@ -53,6 +57,12 @@ export const store = new Vuex.Store({
                 });
                 state.todos = todos;
             });
+        },
+        editTodo(state, payload) {
+            state.editComponent = payload;
+        },
+        cancelTodo(state) {
+            state.editComponent = null;
         },
         updateTodo(state, payload) {
             let docRef = doc(db, payload.id);

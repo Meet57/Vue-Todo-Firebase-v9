@@ -5,7 +5,7 @@ import "./tailwind.css";
 import "./assets/tailwind.css";
 
 Vue.config.productionTip = false;
-Vue.use(store); 
+Vue.use(store);
 
 new Vue({
     render: (h) => h(App),

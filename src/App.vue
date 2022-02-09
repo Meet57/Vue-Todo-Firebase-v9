@@ -10,6 +10,7 @@
         </div>
         <div class="container mx-auto my-7">
             <alert />
+            <edit-model />
             <add-todo />
             <todos />
         </div>
@@ -20,6 +21,7 @@
 import todos from "./components/todos.vue";
 import addTodo from "./components/addTodo.vue";
 import alert from "./components/Alert.vue";
+import editModel from "./components/editModel.vue";
 
 export default {
     name: "Main",
@@ -27,6 +29,7 @@ export default {
         todos: todos,
         addTodo,
         alert,
+        "edit-model": editModel,
     },
     computed: {
         noOfTodos() {
