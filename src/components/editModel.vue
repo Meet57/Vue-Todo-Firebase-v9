@@ -11,7 +11,6 @@
                     placeholder="Todo"
                     :value="getEditDetails.todo"
                     class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                    required
                     autofocus
                 />
                 <button
@@ -47,6 +46,15 @@ export default {
         },
         AllTodos() {
             return this.$store.getters.AllTodos;
+        },
+    },
+    watch: {
+        getEditDetails: function (newvalue) {
+            if (newvalue != null) {
+                setTimeout(() => {
+                    this.$refs.todo.focus();
+                });
+            }
         },
     },
     methods: {
