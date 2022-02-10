@@ -109,86 +109,86 @@ export const store = new Vuex.Store({
     actions: {},
 });
 
-let arr = [
-    {
-        todo: "Perkin Tincknell",
-        color: "#d604a9",
-        status: true,
-    },
-    {
-        todo: "Garreth Bernade",
-        color: "#19bf66",
-        status: false,
-    },
-    {
-        todo: "Cornelle Jehan",
-        color: "#b42242",
-        status: true,
-    },
-    {
-        todo: "Kirsti Iskower",
-        color: "#079847",
-        status: false,
-    },
-    {
-        todo: "Andie Overshott",
-        color: "#143bad",
-        status: false,
-    },
-    {
-        todo: "Emmit Simeonov",
-        color: "#535e70",
-        status: false,
-    },
-    {
-        todo: "Loleta Sutterby",
-        color: "#dc2310",
-        status: false,
-    },
-    {
-        todo: "Renata Richter",
-        color: "#774157",
-        status: false,
-    },
-    {
-        todo: "Avictor Pedro",
-        color: "#be3b58",
-        status: true,
-    },
-    {
-        todo: "Caterina Hansman",
-        color: "#62cc44",
-        status: false,
-    },
-    {
-        todo: "Ber Judd",
-        color: "#f6d756",
-        status: true,
-    },
-    {
-        todo: "Parrnell Dixsee",
-        color: "#515feb",
-        status: false,
-    },
-    {
-        todo: "Karisa Likely",
-        color: "#da58a4",
-        status: true,
-    },
-    {
-        todo: "Donal Letten",
-        color: "#7c42c1",
-        status: false,
-    },
-    {
-        todo: "Ainslie Kuna",
-        color: "#0be460",
-        status: true,
-    },
-];
+// let arr = [
+//     {
+//         todo: "Perkin Tincknell",
+//         color: "#d604a9",
+//         status: true,
+//     },
+//     {
+//         todo: "Garreth Bernade",
+//         color: "#19bf66",
+//         status: false,
+//     },
+//     {
+//         todo: "Cornelle Jehan",
+//         color: "#b42242",
+//         status: true,
+//     },
+//     {
+//         todo: "Kirsti Iskower",
+//         color: "#079847",
+//         status: false,
+//     },
+//     {
+//         todo: "Andie Overshott",
+//         color: "#143bad",
+//         status: false,
+//     },
+//     {
+//         todo: "Emmit Simeonov",
+//         color: "#535e70",
+//         status: false,
+//     },
+//     {
+//         todo: "Loleta Sutterby",
+//         color: "#dc2310",
+//         status: false,
+//     },
+//     {
+//         todo: "Renata Richter",
+//         color: "#774157",
+//         status: false,
+//     },
+//     {
+//         todo: "Avictor Pedro",
+//         color: "#be3b58",
+//         status: true,
+//     },
+//     {
+//         todo: "Caterina Hansman",
+//         color: "#62cc44",
+//         status: false,
+//     },
+//     {
+//         todo: "Ber Judd",
+//         color: "#f6d756",
+//         status: true,
+//     },
+//     {
+//         todo: "Parrnell Dixsee",
+//         color: "#515feb",
+//         status: false,
+//     },
+//     {
+//         todo: "Karisa Likely",
+//         color: "#da58a4",
+//         status: true,
+//     },
+//     {
+//         todo: "Donal Letten",
+//         color: "#7c42c1",
+//         status: false,
+//     },
+//     {
+//         todo: "Ainslie Kuna",
+//         color: "#0be460",
+//         status: true,
+//     },
+// ];
 
-arr.forEach((data) => {
-    addDoc(db, { ...data, createdAt: serverTimestamp() }).then(() => {
-        console.log("added");
-    });
-});
+// arr.forEach((data) => {
+//     addDoc(db, { ...data, createdAt: serverTimestamp() }).then(() => {
+//         console.log("added");
+//     });
+// });

@@ -93,7 +93,7 @@ export default {
             task: {
                 todo: "",
                 status: false,
-                color: null,
+                color: "#ffffff",
             },
         };
     },
