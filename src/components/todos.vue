@@ -1,5 +1,59 @@
 <template>
-    <div class="">
+    <div class="mt-2">
+        <!-- Filter Model -->
+        <model-slot v-if="model" class="center w-1/3">
+            <template #header>
+                Filter for {{ !tab ? "Incomplete Tasks" : "Complete Tasks" }}
+            </template>
+            <template #body>
+                <div class="m-2 flex flex-wrap" v-if="!tab">
+                    <div
+                        v-for="color in incompletedTaskColor"
+                        :key="color"
+                        :style="{ color: color }"
+                    >
+                        <input
+                            type="checkbox"
+                            v-model="completedFilter"
+                            class="mx-2"
+                            :name="color"
+                            :id="color"
+                            :value="color"
+                        />{{ color }}
+                    </div>
+                </div>
+                <div class="m-2 flex flex-wrap" v-else>
+                    <div v-for="color in completedTaskColor" :key="color" :style="{ color: color }">
+                        <input
+                            type="checkbox"
+                            v-model="completedFilter"
+                            class="mx-2"
+                            :name="color"
+                            :id="color"
+                            :value="color"
+                        />{{ color }}
+                    </div>
+                </div>
+                <button
+                    class="ml-2 border-red-400 border px-3 py-0.5 rounded transition-all text-red-500 hover:border-transparent hover:bg-red-500 hover:text-white focus:outline-none"
+                    type="cancel"
+                    v-on:click="model = false"
+                >
+                    Cancel
+                </button>
+            </template>
+        </model-slot>
+        <!-- Filter Model -->
+        <div
+            class="filterOption border-blue-400 p-2 px-4 border rounded-lg hover:bg-blue-400 hover:text-white"
+            v-on:click="
+                () => {
+                    model = !model;
+                }
+            "
+        >
+            Filter
+        </div>
         <div class="border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px">
                 <li
@@ -74,25 +128,25 @@
 </template>
 
 <script>
+import modelSlotVue from "./modelSlot.vue";
 import todo from "./todo.vue";
 export default {
     name: "AllTodos",
     components: {
         todo: todo,
+        "model-slot": modelSlotVue,
     },
     data() {
         return {
-            tab: true,
+            tab: false,
+            filter: [],
+            model: false,
+            completedFilter: [],
+            incompletedFilter: [],
         };
     },
+    watch: {},
     computed: {
-        AllTodos() {
-            if (this.tab) {
-                return this.$store.getters.AllTodos.filter((todo) => !todo.status);
-            } else {
-                return this.$store.getters.AllTodos.filter((todo) => todo.status);
-            }
-        },
         completedTasks() {
             return this.$store.getters.completedTasks;
         },
@@ -102,8 +156,25 @@ export default {
         noOfTodos() {
             return this.$store.getters.numberOftodos;
         },
+        completedTaskColor() {
+            return this.$store.getters.completedTaskColor;
+        },
+        incompletedTaskColor() {
+            return this.$store.getters.incompletedTaskColor;
+        },
     },
 };
 </script>
 
-<style></style>
+<style>
+.filterOption {
+    width: max-content;
+    cursor: pointer;
+}
+.center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+</style>

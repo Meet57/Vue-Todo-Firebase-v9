@@ -39,6 +39,24 @@ export const store = new Vuex.Store({
         incompletedTasks(state) {
             return state.todos.filter((todo) => !todo.status);
         },
+        completedTaskColor(state) {
+            return new Set(
+                state.todos
+                    .map((todo) => {
+                        if (todo.status) return todo.color;
+                    })
+                    .filter((color) => color)
+            );
+        },
+        incompletedTaskColor(state) {
+            return new Set(
+                state.todos
+                    .map((todo) => {
+                        if (!todo.status) return todo.color;
+                    })
+                    .filter((color) => color)
+            );
+        },
         AllTodos(state) {
             return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? 1 : -1));
         },
