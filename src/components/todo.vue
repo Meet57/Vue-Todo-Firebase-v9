@@ -4,6 +4,7 @@
         <td class="px-3 py-2">
             {{ row.todo }}
         </td>
+        <td :style="{ backgroundColor: row.color }"></td>
         <td class="px-3 py-2">
             <i
                 class="far fa-check-circle fa-lg"

@@ -82,7 +82,7 @@ export const store = new Vuex.Store({
         },
         updateTodo(state, payload) {
             let docRef = doc(db, payload.id);
-            updateDoc(docRef, { todo: payload.todo });
+            updateDoc(docRef, { ...payload });
             // let update = true;
             // state.todos.forEach((task) => {
             //     if (task.todo.toUpperCase() == payload.todo.toUpperCase()) {
@@ -109,131 +109,86 @@ export const store = new Vuex.Store({
     actions: {},
 });
 
-// let arr = [
-//     {
-//         todo: "White-throated monitor",
-//         status: false,
-//     },
-//     {
-//         todo: "Campo flicker",
-//         status: false,
-//     },
-//     {
-//         todo: "Squirrel, arctic ground",
-//         status: true,
-//     },
-//     {
-//         todo: "Genoveva",
-//         status: true,
-//     },
-//     {
-//         todo: "Greater sage grouse",
-//         status: false,
-//     },
-//     {
-//         todo: "Rufous tree pie",
-//         status: false,
-//     },
-//     {
-//         todo: "Pine snake (unidentified)",
-//         status: false,
-//     },
-//     {
-//         todo: "Zorro, azara's",
-//         status: false,
-//     },
-//     {
-//         todo: "Kafue flats lechwe",
-//         status: false,
-//     },
-//     {
-//         todo: "Lion, steller's sea",
-//         status: false,
-//     },
-//     {
-//         todo: "Hen, sage",
-//         status: false,
-//     },
-//     {
-//         todo: "Laughing dove",
-//         status: true,
-//     },
-//     {
-//         todo: "Red phalarope",
-//         status: true,
-//     },
-//     {
-//         todo: "Sandgrouse, yellow-throated",
-//         status: true,
-//     },
-//     {
-//         todo: "Sunbird, lesser double-collared",
-//         status: true,
-//     },
-//     {
-//         todo: "Deer, spotted",
-//         status: false,
-//     },
-//     {
-//         todo: "Fisher",
-//         status: false,
-//     },
-//     {
-//         todo: "Raven, white-necked",
-//         status: true,
-//     },
-//     {
-//         todo: "Three-banded plover",
-//         status: false,
-//     },
-//     {
-//         todo: "Roseat flamingo",
-//         status: false,
-//     },
-//     {
-//         todo: "Lion, australian sea",
-//         status: false,
-//     },
-//     {
-//         todo: "Blue-breasted cordon bleu",
-//         status: true,
-//     },
-//     {
-//         todo: "Hartebeest, coke's",
-//         status: true,
-//     },
-//     {
-//         todo: "Echidna, short-beaked",
-//         status: true,
-//     },
-//     {
-//         todo: "Dolphin, bottle-nose",
-//         status: false,
-//     },
-//     {
-//         todo: "Ground legaan",
-//         status: true,
-//     },
-//     {
-//         todo: "Yellow-brown sungazer",
-//         status: true,
-//     },
-//     {
-//         todo: "Deer, spotted",
-//         status: false,
-//     },
-//     {
-//         todo: "Fox, arctic",
-//         status: true,
-//     },
-//     {
-//         todo: "Nile crocodile",
-//         status: true,
-//     },
-// ];
+let arr = [
+    {
+        todo: "Perkin Tincknell",
+        color: "#d604a9",
+        status: true,
+    },
+    {
+        todo: "Garreth Bernade",
+        color: "#19bf66",
+        status: false,
+    },
+    {
+        todo: "Cornelle Jehan",
+        color: "#b42242",
+        status: true,
+    },
+    {
+        todo: "Kirsti Iskower",
+        color: "#079847",
+        status: false,
+    },
+    {
+        todo: "Andie Overshott",
+        color: "#143bad",
+        status: false,
+    },
+    {
+        todo: "Emmit Simeonov",
+        color: "#535e70",
+        status: false,
+    },
+    {
+        todo: "Loleta Sutterby",
+        color: "#dc2310",
+        status: false,
+    },
+    {
+        todo: "Renata Richter",
+        color: "#774157",
+        status: false,
+    },
+    {
+        todo: "Avictor Pedro",
+        color: "#be3b58",
+        status: true,
+    },
+    {
+        todo: "Caterina Hansman",
+        color: "#62cc44",
+        status: false,
+    },
+    {
+        todo: "Ber Judd",
+        color: "#f6d756",
+        status: true,
+    },
+    {
+        todo: "Parrnell Dixsee",
+        color: "#515feb",
+        status: false,
+    },
+    {
+        todo: "Karisa Likely",
+        color: "#da58a4",
+        status: true,
+    },
+    {
+        todo: "Donal Letten",
+        color: "#7c42c1",
+        status: false,
+    },
+    {
+        todo: "Ainslie Kuna",
+        color: "#0be460",
+        status: true,
+    },
+];
 
-// arr.forEach((data) => {
-//     addDoc(db, { ...data, createdAt: serverTimestamp() }).then(() => {
-//         console.log("added");
-//     });
-// });
+arr.forEach((data) => {
+    addDoc(db, { ...data, createdAt: serverTimestamp() }).then(() => {
+        console.log("added");
+    });
+});

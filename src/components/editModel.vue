@@ -44,6 +44,16 @@
                         class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         autofocus
                     />
+                    <label for="color" class="mr-2">Pick Color:</label>
+                    <input
+                        type="color"
+                        :value="getEditDetails.color"
+                        ref="color"
+                        name="color"
+                        class="rounded-lg my-2"
+                        id=""
+                    />
+                    <br />
                     <button
                         class="border-green-400 border px-3 py-0.5 rounded transition-all text-green-500 hover:border-transparent hover:bg-green-500 hover:text-white focus:outline-none"
                         type="submit"
@@ -99,6 +109,7 @@ export default {
         },
         updateTodo() {
             let todo = this.$refs.todo.value;
+            let color = this.$refs.color.value;
             let id = this.getEditDetails.id;
             if (todo != "") {
                 let update = true;
@@ -110,7 +121,7 @@ export default {
                     }
                 });
                 if (update) {
-                    this.$store.commit("updateTodo", { todo: todo, id: id });
+                    this.$store.commit("updateTodo", { todo: todo, id: id, color: color });
                     this.$store.commit("cancelTodo");
                 } else {
                     this.$store.commit("updateAlert", { text: "Todo Repeated" });

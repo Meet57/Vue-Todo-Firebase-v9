@@ -24,7 +24,6 @@
                 <form class="body mt-2">
                     <input
                         type="text"
-                        id="text"
                         ref="todo"
                         placeholder="Todo"
                         v-model="task.todo"
@@ -32,6 +31,15 @@
                         class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         autofocus
                     />
+                    <label for="color" class="mr-2">Pick Color:</label>
+                    <input
+                        type="color"
+                        v-model="task.color"
+                        name="color"
+                        class="rounded-lg my-2"
+                        id=""
+                    />
+                    <br />
                     <button
                         class="border-blue-400 border px-3 py-0.5 rounded transition-all text-blue-500 hover:border-transparent hover:bg-blue-500 hover:text-white focus:outline-none"
                         type="submit"
@@ -85,6 +93,7 @@ export default {
             task: {
                 todo: "",
                 status: false,
+                color: null,
             },
         };
     },
@@ -113,7 +122,7 @@ export default {
                 });
                 if (add) {
                     this.$store.commit("addTodo", this.task);
-                    this.task = { todo: "", status: false };
+                    this.task = { todo: "", status: false, color: null };
                     this.model = false;
                 } else {
                     this.$store.commit("updateAlert", { text: "Todo Repeated" });

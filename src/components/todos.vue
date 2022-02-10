@@ -37,10 +37,11 @@
         <template v-if="tab">
             <table v-if="completedTasks.length > 0" class="w-full rounded-full">
                 <tr class="p-3 bg-gray-300">
-                    <th class="text-left px-5 py-3 w-1/5">ID</th>
-                    <th class="text-left px-5 py-3 w-2/5">TODO</th>
-                    <th class="text-left px-5 py-3 w-1/5">STATUS</th>
-                    <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
+                    <th class="text-left px-5 py-3 w-1/6">ID</th>
+                    <th class="text-left px-5 py-3 w-2/6">TODO</th>
+                    <th class="text-left px-5 py-3 w-1/6">PRIORITY</th>
+                    <th class="text-left px-5 py-3 w-1/6">STATUS</th>
+                    <th class="text-left px-5 py-3 w-1/6">ACTIONS</th>
                 </tr>
                 <todo v-for="row in completedTasks" :key="row.id" :row="row" />
             </table>
@@ -54,10 +55,11 @@
         <template v-else>
             <table v-if="incompletedTasks.length > 0" class="w-full rounded-full">
                 <tr class="p-3 bg-gray-300">
-                    <th class="text-left px-5 py-3 w-1/5">ID</th>
-                    <th class="text-left px-5 py-3 w-2/5">TODO</th>
-                    <th class="text-left px-5 py-3 w-1/5">STATUS</th>
-                    <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
+                    <th class="text-left px-5 py-3 w-1/6">ID</th>
+                    <th class="text-left px-5 py-3 w-2/6">TODO</th>
+                    <th class="text-left px-5 py-3 w-1/6">PRIORITY</th>
+                    <th class="text-left px-5 py-3 w-1/6">STATUS</th>
+                    <th class="text-left px-5 py-3 w-1/6">ACTIONS</th>
                 </tr>
                 <todo v-for="row in incompletedTasks" :key="row.id" :row="row" />
             </table>
