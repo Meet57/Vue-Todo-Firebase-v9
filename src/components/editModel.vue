@@ -140,5 +140,6 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
+    z-index: 99;
 }
 </style>
