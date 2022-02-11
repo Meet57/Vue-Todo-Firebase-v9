@@ -129,79 +129,79 @@ export const store = new Vuex.Store({
 
 // let arr = [
 //     {
-//         todo: "Perkin Tincknell",
-//         color: "#d604a9",
+//         todo: "Colobus guerza",
 //         status: true,
+//         color: "Teal",
 //     },
 //     {
-//         todo: "Garreth Bernade",
-//         color: "#19bf66",
+//         todo: "Nycticorax nycticorax",
 //         status: false,
+//         color: "Orange",
 //     },
 //     {
-//         todo: "Cornelle Jehan",
-//         color: "#b42242",
+//         todo: "Eumetopias jubatus",
 //         status: true,
+//         color: "Green",
 //     },
 //     {
-//         todo: "Kirsti Iskower",
-//         color: "#079847",
-//         status: false,
-//     },
-//     {
-//         todo: "Andie Overshott",
-//         color: "#143bad",
-//         status: false,
-//     },
-//     {
-//         todo: "Emmit Simeonov",
-//         color: "#535e70",
-//         status: false,
-//     },
-//     {
-//         todo: "Loleta Sutterby",
-//         color: "#dc2310",
-//         status: false,
-//     },
-//     {
-//         todo: "Renata Richter",
-//         color: "#774157",
-//         status: false,
-//     },
-//     {
-//         todo: "Avictor Pedro",
-//         color: "#be3b58",
+//         todo: "Ramphastos tucanus",
 //         status: true,
+//         color: "Purple",
 //     },
 //     {
-//         todo: "Caterina Hansman",
-//         color: "#62cc44",
+//         todo: "Dicrostonyx groenlandicus",
 //         status: false,
+//         color: "Yellow",
 //     },
 //     {
-//         todo: "Ber Judd",
-//         color: "#f6d756",
+//         todo: "Pseudocheirus peregrinus",
 //         status: true,
+//         color: "Fuscia",
 //     },
 //     {
-//         todo: "Parrnell Dixsee",
-//         color: "#515feb",
+//         todo: "Ploceus rubiginosus",
+//         status: true,
+//         color: "Red",
+//     },
+//     {
+//         todo: "Haematopus ater",
+//         status: true,
+//         color: "Purple",
+//     },
+//     {
+//         todo: "Manouria emys",
+//         status: true,
+//         color: "Orange",
+//     },
+//     {
+//         todo: "Amphibolurus barbatus",
+//         status: true,
+//         color: "Puce",
+//     },
+//     {
+//         todo: "Coluber constrictor",
 //         status: false,
+//         color: "Mauv",
 //     },
 //     {
-//         todo: "Karisa Likely",
-//         color: "#da58a4",
+//         todo: "Hydrochoerus hydrochaeris",
 //         status: true,
+//         color: "Maroon",
 //     },
 //     {
-//         todo: "Donal Letten",
-//         color: "#7c42c1",
+//         todo: "Tenrec ecaudatus",
 //         status: false,
+//         color: "Yellow",
 //     },
 //     {
-//         todo: "Ainslie Kuna",
-//         color: "#0be460",
+//         todo: "Mabuya spilogaster",
 //         status: true,
+//         color: "Blue",
+//     },
+//     {
+//         todo: "Pavo cristatus",
+//         status: false,
+//         color: "Indigo",
 //     },
 // ];
 

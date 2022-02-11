@@ -43,9 +43,7 @@
                 </button>
             </template>
         </model-slot> -->
-
-        <!-- Filter Model -->
-        <div
+        <!-- <div
             class="filterOption border-blue-400 p-2 px-4 border rounded-lg hover:bg-blue-400 hover:text-white"
             v-on:click="
                 () => {
@@ -54,7 +52,41 @@
             "
         >
             Filter
-        </div>
+        </div> -->
+        <div class="text-lg text-blue-600">Filter For</div>
+        <a-select
+            v-if="!tab"
+            class="w-1/3"
+            mode="multiple"
+            :placeholder="'Incomplete Tasks'"
+            @change="filterChange"
+        >
+            <a-select-option
+                :style="{ backgroundColor: i }"
+                v-for="i in incompletedTaskColor"
+                :key="i"
+            >
+                {{ i }}
+            </a-select-option>
+        </a-select>
+        <a-select
+            v-else
+            class="w-1/3"
+            mode="multiple"
+            :placeholder="'completed tasks'"
+            @change="filterChange"
+        >
+            <a-select-option
+                :style="{ backgroundColor: i }"
+                v-for="i in completedTaskColor"
+                :key="i"
+            >
+                {{ i }}
+            </a-select-option>
+        </a-select>
+        <!-- {{ completedTaskColor }} -->
+        <!-- Filter Model -->
+
         <div class="border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px">
                 <li
@@ -92,11 +124,10 @@
         <template v-if="tab">
             <table v-if="completedTasks.length > 0" class="w-full rounded-full">
                 <tr class="p-3 bg-gray-300">
-                    <th class="text-left px-5 py-3 w-1/6">ID</th>
-                    <th class="text-left px-5 py-3 w-2/6">TODO</th>
-                    <th class="text-left px-5 py-3 w-1/6">PRIORITY</th>
-                    <th class="text-left px-5 py-3 w-1/6">STATUS</th>
-                    <th class="text-left px-5 py-3 w-1/6">ACTIONS</th>
+                    <th class="text-left px-5 py-3 w-1/5">ID</th>
+                    <th class="text-left px-5 py-3 w-2/5">TODO</th>
+                    <th class="text-left px-5 py-3 w-1/5">STATUS</th>
+                    <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
                 </tr>
                 <todo v-for="row in completedTasks" :key="row.id" :row="row" />
             </table>
@@ -110,11 +141,10 @@
         <template v-else>
             <table v-if="incompletedTasks.length > 0" class="w-full rounded-full">
                 <tr class="p-3 bg-gray-300">
-                    <th class="text-left px-5 py-3 w-1/6">ID</th>
-                    <th class="text-left px-5 py-3 w-2/6">TODO</th>
-                    <th class="text-left px-5 py-3 w-1/6">PRIORITY</th>
-                    <th class="text-left px-5 py-3 w-1/6">STATUS</th>
-                    <th class="text-left px-5 py-3 w-1/6">ACTIONS</th>
+                    <th class="text-left px-5 py-3 w-1/5">ID</th>
+                    <th class="text-left px-5 py-3 w-2/5">TODO</th>
+                    <th class="text-left px-5 py-3 w-1/5">STATUS</th>
+                    <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
                 </tr>
                 <todo v-for="row in incompletedTasks" :key="row.id" :row="row" />
             </table>
@@ -129,17 +159,17 @@
 </template>
 
 <script>
-import modelSlotVue from "./modelSlot.vue";
 import todo from "./todo.vue";
+// import { DownOutlined } from "@ant-design/icons-vue";
 export default {
     name: "AllTodos",
     components: {
         todo: todo,
-        "model-slot": modelSlotVue,
+        // DownOutlined: DownOutlined,
     },
     data() {
         return {
-            tab: false,
+            tab: true,
             filter: [],
             model: false,
             completedFilter: [],
@@ -147,21 +177,42 @@ export default {
         };
     },
     watch: {},
+    methods: {
+        filterChange(value) {
+            if (!this.tab) {
+                this.incompletedFilter = value;
+            } else {
+                this.completedFilter = value;
+            }
+        },
+    },
     computed: {
         completedTasks() {
-            return this.$store.getters.completedTasks;
+            if (this.completedFilter.length > 0) {
+                return this.$store.getters.completedTasks.filter((t) =>
+                    this.completedFilter.includes(t.color)
+                );
+            } else {
+                return this.$store.getters.completedTasks;
+            }
         },
         incompletedTasks() {
-            return this.$store.getters.incompletedTasks;
+            if (this.incompletedFilter.length > 0) {
+                return this.$store.getters.incompletedTasks.filter((t) =>
+                    this.incompletedFilter.includes(t.color)
+                );
+            } else {
+                return this.$store.getters.incompletedTasks;
+            }
         },
         noOfTodos() {
             return this.$store.getters.numberOftodos;
         },
         completedTaskColor() {
-            return this.$store.getters.completedTaskColor;
+            return Array.from(this.$store.getters.completedTaskColor);
         },
         incompletedTaskColor() {
-            return this.$store.getters.incompletedTaskColor;
+            return Array.from(this.$store.getters.incompletedTaskColor);
         },
     },
 };

@@ -1,10 +1,15 @@
 <template>
     <tr class="border-gray-200 bg-gray-600 text-white">
-        <td class="px-3 py-2">{{ row.number }}</td>
+        <td class="px-3 py-2 flex items-center">
+            <div
+                class="rounded-full mr-3"
+                :style="{ backgroundColor: row.color, height: '15px', width: '15px' }"
+            ></div>
+            {{ row.number }}
+        </td>
         <td class="px-3 py-2">
             {{ row.todo }}
         </td>
-        <td :style="{ backgroundColor: row.color }"></td>
         <td class="px-3 py-2">
             <i
                 class="far fa-check-circle fa-lg"
