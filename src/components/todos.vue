@@ -1,7 +1,7 @@
 <template>
     <div class="mt-2">
         <!-- Filter Model -->
-        <model-slot v-if="model" class="center w-1/3">
+        <!-- <model-slot v-if="model" class="center w-1/3">
             <template #header>
                 Filter for {{ !tab ? "Incomplete Tasks" : "Complete Tasks" }}
             </template>
@@ -42,7 +42,8 @@
                     Cancel
                 </button>
             </template>
-        </model-slot>
+        </model-slot> -->
+
         <!-- Filter Model -->
         <div
             class="filterOption border-blue-400 p-2 px-4 border rounded-lg hover:bg-blue-400 hover:text-white"
