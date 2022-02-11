@@ -55,30 +55,14 @@
         </div> -->
         <div class="text-lg text-blue-600">Filter For</div>
         <a-select
-            v-if="!tab"
             class="w-1/3"
             mode="multiple"
-            :placeholder="'Incomplete Tasks'"
+            :placeholder="!tab ? 'Incomplete Tasks' : 'complete Tasks'"
             @change="filterChange"
         >
             <a-select-option
                 :style="{ backgroundColor: i }"
-                v-for="i in incompletedTaskColor"
-                :key="i"
-            >
-                {{ i }}
-            </a-select-option>
-        </a-select>
-        <a-select
-            v-else
-            class="w-1/3"
-            mode="multiple"
-            :placeholder="'completed tasks'"
-            @change="filterChange"
-        >
-            <a-select-option
-                :style="{ backgroundColor: i }"
-                v-for="i in completedTaskColor"
+                v-for="i in !tab ? incompletedTaskColor : completedTaskColor"
                 :key="i"
             >
                 {{ i }}
