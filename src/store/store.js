@@ -11,6 +11,7 @@ import {
 import Vue from "vue";
 import Vuex from "vuex";
 import db from "../firebase";
+import { name } from "ntcjs";
 
 Vue.use(Vuex);
 
@@ -43,18 +44,18 @@ export const store = new Vuex.Store({
             return new Set(
                 state.todos
                     .map((todo) => {
-                        if (todo.status) return todo.color;
+                        if (todo.status) return { colorName: todo.colorName, color: todo.color };
                     })
-                    .filter((color) => color)
+                    .filter((colorName) => colorName)
             );
         },
         incompletedTaskColor(state) {
             return new Set(
                 state.todos
                     .map((todo) => {
-                        if (!todo.status) return todo.color;
+                        if (!todo.status) return { colorName: todo.colorName, color: todo.color };
                     })
-                    .filter((color) => color)
+                    .filter((colorName) => colorName)
             );
         },
         AllTodos(state) {
@@ -78,7 +79,8 @@ export const store = new Vuex.Store({
             }, 3000);
         },
         addTodo(state, data) {
-            addDoc(db, { ...data, createdAt: serverTimestamp() });
+            let colorName = name(data.color)[1];
+            addDoc(db, { ...data, colorName, createdAt: serverTimestamp() });
         },
         getTodo(state) {
             const q = query(db, orderBy("createdAt"));
@@ -100,7 +102,8 @@ export const store = new Vuex.Store({
         },
         updateTodo(state, payload) {
             let docRef = doc(db, payload.id);
-            updateDoc(docRef, { ...payload });
+            let colorName = name(payload.color)[1];
+            updateDoc(docRef, { ...payload, colorName: colorName });
             // let update = true;
             // state.todos.forEach((task) => {
             //     if (task.todo.toUpperCase() == payload.todo.toUpperCase()) {

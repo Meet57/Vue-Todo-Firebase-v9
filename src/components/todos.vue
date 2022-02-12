@@ -1,5 +1,6 @@
 <template>
     <div class="mt-2">
+        {{ incompletedTaskColor }}
         <a-tabs default-active-key="1">
             <a-tab-pane key="1">
                 <template #tab>
