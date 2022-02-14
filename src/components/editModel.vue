@@ -4,11 +4,10 @@
             :details="task"
             @updateTask="updateTask"
             @updateColor="updateColor"
-            @submit="updateTodo"
             @cancelTodo="cancelTodo"
             @updateTodo="updateTodo"
         >
-            <template #header> Edit Form </template>
+            <template #header>Edit Form </template>
             <template #id>ID : {{ getEditDetails.number }}</template>
         </model-slot>
     </div>

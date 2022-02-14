@@ -1,27 +1,17 @@
 <template>
     <div class="">
-        <!-- <div class="flex items-center justify-between">
-            <form class="">
-                <input
-                    type="text"
-                    class="rounded-tl-lg rounded-bl-lg bg-blue-400 text-white placeholder-white px-3 py-3 focus:bg-blue-500"
-                    placeholder="Todos"
-                    v-model="task.todo"
-                />
-                <button
-                    class="rounded-tr-lg rounded-br-lg hover:bg-blue-500 bg-blue-400 text-white px-4 py-3 border-l-2 border-white"
-                    v-on:click.prevent="addTodo"
-                    type="submit"
-                >
-                    Add
-                </button>
-            </form> -->
-        <!--  -->
-
-        <model-slot v-if="model" class="center w-1/3">
-            <template #header> Add Form </template>
+        <model-slot
+            v-if="model"
+            class="center w-1/3"
+            :details="task"
+            @updateTask="updateTask"
+            @updateColor="updateColor"
+            @updateTodo="addTodo"
+            @cancelTodo="model = false"
+        >
+            <template #header>Add Todo</template>
             <template #body>
-                <form class="body mt-2">
+                <!-- <form class="body mt-2">
                     <input
                         type="text"
                         ref="todo"
@@ -54,7 +44,7 @@
                     >
                         Cancel
                     </button>
-                </form>
+                </form> -->
             </template>
         </model-slot>
         <div class="flex items-center justify-between">
@@ -97,21 +87,27 @@ export default {
             },
         };
     },
-    watch: {
-        model: function (newvalue) {
-            if (newvalue) {
-                setTimeout(() => {
-                    this.$refs.todo.focus();
-                });
-            }
-        },
-    },
+    // watch: {
+    //     model: function (newvalue) {
+    //         if (newvalue) {
+    //             setTimeout(() => {
+    //                 this.$refs.todo.focus();
+    //             });
+    //         }
+    //     },
+    // },
     computed: {
         AllTodos() {
             return this.$store.getters.AllTodos;
         },
     },
     methods: {
+        updateTask(task) {
+            this.task.todo = task;
+        },
+        updateColor(color) {
+            this.task.color = color;
+        },
         addTodo() {
             if (this.task.todo !== "") {
                 let add = true;
@@ -130,8 +126,6 @@ export default {
             } else {
                 this.$store.commit("updateAlert", { text: "Please enter some text" });
             }
-            // if (this.task.todo !== "") {
-            // }
         },
     },
 };
