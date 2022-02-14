@@ -6,6 +6,7 @@
             class="w-1/3"
             :title="'Incomplete Task Filter'"
             mode="multiple"
+            :value="incompletedFilter"
             :placeholder="'Incomplete Task Filter'"
             @change="filterChangeIncomplete"
         >
@@ -26,6 +27,7 @@
             v-else
             class="w-1/3"
             mode="multiple"
+            :value="completedFilter"
             :title="'Complete Task Filter'"
             @change="filterChangeComplete"
             :placeholder="'Complete Task Filter'"
@@ -131,7 +133,6 @@ export default {
         },
         callback(key) {
             this.tab = key;
-            console.log(this.tab);
         },
     },
     computed: {
