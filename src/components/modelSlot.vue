@@ -21,6 +21,7 @@
                     :value="details.color"
                     name="color"
                     class="rounded-lg my-2"
+                    default="#dddddd"
                     @input="updateColor($event.target.value)"
                 />
                 <br />
@@ -29,7 +30,7 @@
                     type="submit"
                     v-on:click.prevent="updateTodo"
                 >
-                    {{ details.todo.length > 0 ? "Update" : "Add" }}
+                    {{ details.id ? "Update" : "Add" }}
                 </button>
                 <button
                     class="ml-2 border-red-400 border px-3 py-0.5 rounded transition-all text-red-500 hover:border-transparent hover:bg-red-500 hover:text-white focus:outline-none"

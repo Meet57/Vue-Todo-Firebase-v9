@@ -118,7 +118,7 @@ export default {
                 });
                 if (add) {
                     this.$store.commit("addTodo", this.task);
-                    this.task = { todo: "", status: false, color: null };
+                    this.task = { todo: "", status: false, color: "#ffffff" };
                     this.model = false;
                 } else {
                     this.$store.commit("updateAlert", { text: "Todo Repeated" });
