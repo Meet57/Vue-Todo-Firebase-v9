@@ -1,8 +1,52 @@
 <template>
     <div class="mt-2">
-        {{ incompletedTaskColor }}
-        <a-tabs default-active-key="1">
-            <a-tab-pane key="1">
+        <!-- filter -->
+        <a-select
+            v-if="tab == 'incomplete'"
+            class="w-1/3"
+            :title="'Incomplete Task Filter'"
+            mode="multiple"
+            :placeholder="'Incomplete Task Filter'"
+            @change="filterChangeIncomplete"
+        >
+            <a-select-option v-for="i in incompletedTaskColor" :key="i.color">
+                <div
+                    class="rounded-full mr-3"
+                    :style="{
+                        backgroundColor: i.color,
+                        height: '15px',
+                        width: '15px',
+                        display: 'inline-block',
+                    }"
+                ></div>
+                {{ i.colorName }}
+            </a-select-option>
+        </a-select>
+        <a-select
+            v-else
+            class="w-1/3"
+            mode="multiple"
+            :title="'Complete Task Filter'"
+            @change="filterChangeComplete"
+            :placeholder="'Complete Task Filter'"
+        >
+            <a-select-option v-for="i in completedTaskColor" :key="i.color">
+                <div
+                    class="rounded-full mr-3"
+                    :style="{
+                        backgroundColor: i.color,
+                        height: '15px',
+                        width: '15px',
+                        display: 'inline-block',
+                    }"
+                ></div>
+                {{ i.colorName }}
+            </a-select-option>
+        </a-select>
+        <!-- filter end -->
+        <!-- Tabs -->
+        <a-tabs default-active-key="incomplete" @change="callback">
+            <a-tab-pane key="incomplete">
                 <template #tab>
                     Incomplete Tasks
                     <span
@@ -29,7 +73,7 @@
                 </div>
                 <!-- Table over -->
             </a-tab-pane>
-            <a-tab-pane key="2">
+            <a-tab-pane key="complete">
                 <template #tab>
                     Complete Tasks
                     <span
@@ -70,7 +114,7 @@ export default {
     },
     data() {
         return {
-            tab: true,
+            tab: "incomplete",
             filter: [],
             model: false,
             completedFilter: [],
@@ -79,12 +123,15 @@ export default {
     },
     watch: {},
     methods: {
-        filterChange(value) {
-            if (!this.tab) {
-                this.incompletedFilter = value;
-            } else {
-                this.completedFilter = value;
-            }
+        filterChangeComplete(value) {
+            this.completedFilter = value;
+        },
+        filterChangeIncomplete(value) {
+            this.incompletedFilter = value;
+        },
+        callback(key) {
+            this.tab = key;
+            console.log(this.tab);
         },
     },
     computed: {
@@ -109,6 +156,7 @@ export default {
         noOfTodos() {
             return this.$store.getters.numberOftodos;
         },
+
         completedTaskColor() {
             return Array.from(this.$store.getters.completedTaskColor);
         },
