@@ -47,9 +47,9 @@
         </a-select>
         <!-- filter end -->
         <!-- Tabs -->
-        <a-tabs default-active-key="incomplete" @change="callback">
+        <a-tabs default-active-key="incomplete" @change="callback" :tabBarStyle="{ margin: 0 }">
             <a-tab-pane key="incomplete">
-                <template #tab>
+                <template #tab class>
                     Incomplete Tasks
                     <span
                         class="ml-2 bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900"
@@ -58,7 +58,7 @@
                     </span>
                 </template>
                 <!-- Table -->
-                <table v-if="incompletedTasks.length > 0" class="w-full rounded-full">
+                <table v-if="incompletedTasks.length > 0" class="w-full">
                     <tr class="p-3 bg-gray-300">
                         <th class="text-left px-5 py-3 w-1/5">ID</th>
                         <th class="text-left px-5 py-3 w-2/5">TODO</th>
@@ -85,7 +85,7 @@
                     </span>
                 </template>
                 <!-- Table -->
-                <table v-if="completedTasks.length > 0" class="w-full rounded-full">
+                <table v-if="completedTasks.length > 0" class="w-full">
                     <tr class="p-3 bg-gray-300">
                         <th class="text-left px-5 py-3 w-1/5">ID</th>
                         <th class="text-left px-5 py-3 w-2/5">TODO</th>
@@ -159,10 +159,10 @@ export default {
         },
 
         completedTaskColor() {
-            return Array.from(this.$store.getters.completedTaskColor);
+            return this.$store.getters.completedTaskColor;
         },
         incompletedTaskColor() {
-            return Array.from(this.$store.getters.incompletedTaskColor);
+            return this.$store.getters.incompletedTaskColor;
         },
     },
 };
