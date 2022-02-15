@@ -85,7 +85,11 @@
                         ></i>
                     </template>
                     <template #actions="text, record">
-                        <i class="far fa-edit fa-lg mr-3" :style="{ color: '#5ef7ff' }"></i>
+                        <i
+                            class="far fa-edit fa-lg mr-3"
+                            :style="{ color: '#5ef7ff' }"
+                            v-on:click="updateTodoData(record)"
+                        ></i>
                         <a-popconfirm title="Are you sure？" @confirm="deleteTodo(record.id)">
                             <a-icon slot="icon" type="question-circle-o" style="color: red" />
                             <i class="far fa-trash-alt fa-lg" :style="{ color: '#ff5e5e' }"></i>
@@ -203,6 +207,9 @@ export default {
         },
         callback(key) {
             this.tab = key;
+        },
+        updateTodoData(data) {
+            this.$emit("updateTodoData", data);
         },
     },
     computed: {
