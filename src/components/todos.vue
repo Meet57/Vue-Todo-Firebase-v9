@@ -58,7 +58,41 @@
                     </span>
                 </template>
                 <!-- Table -->
-                <table v-if="incompletedTasks.length > 0" class="w-full">
+                <a-table
+                    :columns="columns"
+                    :data-source="incompletedTasks"
+                    :pagination="{ pageSize: 20 }"
+                    :scroll="{ y: 450 }"
+                    :rowKey="(t) => t.id"
+                >
+                    <template #id="text, record">
+                        <div
+                            class="rounded-full mr-2"
+                            :style="{
+                                backgroundColor: record.color,
+                                height: '15px',
+                                width: '15px',
+                                display: 'inline-block',
+                            }"
+                        ></div>
+                        {{ record.number }}
+                    </template>
+                    <template #status="text, record">
+                        <i
+                            class="far fa-check-circle fa-lg"
+                            style="color: pink"
+                            v-on:click="toggleStatus(record.id, record.status)"
+                        ></i>
+                    </template>
+                    <template #actions="text, record">
+                        <i class="far fa-edit fa-lg mr-3" :style="{ color: '#5ef7ff' }"></i>
+                        <a-popconfirm title="Are you sure？" @confirm="deleteTodo(record.id)">
+                            <a-icon slot="icon" type="question-circle-o" style="color: red" />
+                            <i class="far fa-trash-alt fa-lg" :style="{ color: '#ff5e5e' }"></i>
+                        </a-popconfirm>
+                    </template>
+                </a-table>
+                <!-- <table v-if="incompletedTasks.length > 0" class="w-full">
                     <tr class="p-3 bg-gray-300">
                         <th class="text-left px-5 py-3 w-1/5">ID</th>
                         <th class="text-left px-5 py-3 w-2/5">TODO</th>
@@ -72,7 +106,7 @@
                     class="bg-blue-100 w-1/5 text-center p-3 m-3 text-blue-800 text-xs font-semibold mr-2 rounded dark:bg-blue-200 dark:text-blue-800"
                 >
                     No Todo Here
-                </div>
+                </div> -->
                 <!-- Table over -->
             </a-tab-pane>
             <a-tab-pane key="complete">
@@ -108,6 +142,33 @@
 
 <script>
 import todo from "./todo.vue";
+
+const columns = [
+    {
+        dataIndex: "id",
+        key: "id",
+        title: "id",
+        scopedSlots: { customRender: "id" },
+    },
+    {
+        dataIndex: "todo",
+        key: "todo",
+        title: "todo",
+    },
+    {
+        dataIndex: "status",
+        key: "status",
+        title: "status",
+        scopedSlots: { customRender: "status" },
+    },
+    {
+        dataIndex: "actions",
+        key: "actions",
+        title: "actions",
+        scopedSlots: { customRender: "actions" },
+    },
+];
+
 export default {
     name: "AllTodos",
     components: {
@@ -121,10 +182,19 @@ export default {
             model: false,
             completedFilter: [],
             incompletedFilter: [],
+            columns,
         };
     },
     watch: {},
     methods: {
+        deleteTodo(id) {
+            // console.log(id);
+            this.$store.commit("deleteTodo", { id });
+        },
+        toggleStatus(id, status) {
+            // console.log(id);
+            this.$store.commit("toogleStatus", { id, status });
+        },
         filterChangeComplete(value) {
             this.completedFilter = value;
         },
