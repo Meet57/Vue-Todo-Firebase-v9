@@ -10,18 +10,6 @@
         </div>
         <div class="container mx-auto my-2">
             <alert />
-            <div class="flex items-end justify-between">
-                <div>
-                    <a-button v-on:click="toogleModel()" :size="'large'"> Add Todo </a-button>
-                </div>
-                <a-card style="width: fit-content">
-                    <i class="far fa-check-circle fa-lg" :style="{ color: 'cyan' }"></i> - Task
-                    Completed
-                    <br />
-                    <i class="far fa-check-circle fa-lg" :style="{ color: 'pink' }"></i> - Task
-                    Inomplete
-                </a-card>
-            </div>
             <model-form
                 v-if="visible"
                 :details="modelTodoData"
@@ -30,7 +18,7 @@
                 @toogleModel="toogleModel"
                 @SubmitTodo="SubmitTodo"
             />
-            <todos @updateTodoData="updateTodoData" />
+            <todos @updateTodoData="updateTodoData" @toogleModel="toogleModel" />
         </div>
     </div>
 </template>

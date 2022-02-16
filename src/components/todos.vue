@@ -1,51 +1,74 @@
 <template>
     <div class="mt-2">
-        <!-- filter -->
-        <a-select
-            v-if="tab == 'incomplete'"
-            class="w-1/3"
-            :title="'Incomplete Task Filter'"
-            mode="multiple"
-            :value="incompletedFilter"
-            :placeholder="'Incomplete Task Filter'"
-            @change="filterChangeIncomplete"
-        >
-            <a-select-option v-for="i in incompletedTaskColor" :key="i.color">
-                <div
-                    class="rounded-full mr-3"
-                    :style="{
-                        backgroundColor: i.color,
-                        height: '15px',
-                        width: '15px',
-                        display: 'inline-block',
-                    }"
-                ></div>
-                {{ i.colorName }}
-            </a-select-option>
-        </a-select>
-        <a-select
-            v-else
-            class="w-1/3"
-            mode="multiple"
-            :value="completedFilter"
-            :title="'Complete Task Filter'"
-            @change="filterChangeComplete"
-            :placeholder="'Complete Task Filter'"
-        >
-            <a-select-option v-for="i in completedTaskColor" :key="i.color">
-                <div
-                    class="rounded-full mr-3"
-                    :style="{
-                        backgroundColor: i.color,
-                        height: '15px',
-                        width: '15px',
-                        display: 'inline-block',
-                    }"
-                ></div>
-                {{ i.colorName }}
-            </a-select-option>
-        </a-select>
-        <!-- filter end -->
+        <div class="flex items-center justify-between">
+            <div class="w-96">
+                <a-button
+                    v-on:click="
+                        () => {
+                            this.$emit('toogleModel');
+                        }
+                    "
+                    class="mb-2"
+                    :size="'large'"
+                >
+                    Add Todo
+                </a-button>
+                <!-- filter -->
+                <a-select
+                    v-if="tab == 'incomplete'"
+                    class="w-full"
+                    :title="'Incomplete Task Filter'"
+                    mode="multiple"
+                    :value="incompletedFilter"
+                    :placeholder="'Incomplete Task Filter'"
+                    @change="filterChangeIncomplete"
+                >
+                    <a-select-option v-for="i in incompletedTaskColor" :key="i.color">
+                        <div
+                            class="rounded-full mr-3"
+                            :style="{
+                                backgroundColor: i.color,
+                                height: '15px',
+                                width: '15px',
+                                display: 'inline-block',
+                            }"
+                        ></div>
+                        {{ i.colorName }}
+                    </a-select-option>
+                </a-select>
+                <a-select
+                    v-else
+                    class="w-1/3"
+                    mode="multiple"
+                    :value="completedFilter"
+                    :title="'Complete Task Filter'"
+                    @change="filterChangeComplete"
+                    :placeholder="'Complete Task Filter'"
+                >
+                    <a-select-option v-for="i in completedTaskColor" :key="i.color">
+                        <div
+                            class="rounded-full mr-3"
+                            :style="{
+                                backgroundColor: i.color,
+                                height: '15px',
+                                width: '15px',
+                                display: 'inline-block',
+                            }"
+                        ></div>
+                        {{ i.colorName }}
+                    </a-select-option>
+                </a-select>
+                <!-- filter end -->
+            </div>
+            <a-card style="width: fit-content">
+                <i class="far fa-check-circle fa-lg" :style="{ color: 'cyan' }"></i> - Task
+                Completed
+                <br />
+                <i class="far fa-check-circle fa-lg" :style="{ color: 'pink' }"></i> - Task
+                Inomplete
+            </a-card>
+        </div>
+
         <!-- Tabs -->
         <a-tabs default-active-key="incomplete" @change="callback" :tabBarStyle="{ margin: 0 }">
             <a-tab-pane key="incomplete">
