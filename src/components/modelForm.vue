@@ -26,6 +26,8 @@
                 @input="updateColor($event.target.value)"
             />
             <br />
+            Status :
+            <a-switch :checked="details.status" @change="updateStatus" />
         </a-modal>
     </div>
 </template>
@@ -58,6 +60,9 @@ export default {
         },
         updateColor(value) {
             this.$emit("updateColor", value);
+        },
+        updateStatus(value) {
+            this.$emit("updateStatus", value);
         },
         closeModel() {
             this.visible = false;

@@ -15,6 +15,7 @@
                 :details="modelTodoData"
                 @updateTask="(task) => (this.modelTodoData.todo = task)"
                 @updateColor="(color) => (this.modelTodoData.color = color)"
+                @updateStatus="(status) => (this.modelTodoData.status = status)"
                 @toogleModel="toogleModel"
                 @SubmitTodo="SubmitTodo"
             />
@@ -51,6 +52,7 @@ export default {
                 this.modelTodoData = {
                     todo: "",
                     color: "#dddddd",
+                    status: false,
                 };
             }
             this.visible = !this.visible;
@@ -65,6 +67,7 @@ export default {
                     todo: this.modelTodoData.todo,
                     id: this.modelTodoData.id,
                     color: this.modelTodoData.color,
+                    status: this.modelTodoData.status,
                 });
             } else {
                 this.$store.commit("addTodo", this.modelTodoData);
