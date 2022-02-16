@@ -12,13 +12,7 @@
             <alert />
             <div class="flex items-center justify-between mb-5">
                 <div>
-                    <p class="mb-2 text-black text-2xl">Add todo</p>
-                    <button
-                        class="rounded-lg hover:bg-blue-500 bg-blue-400 text-white px-4 py-3 border-l-2 border-white"
-                        v-on:click="toogleModel()"
-                    >
-                        Add Todo
-                    </button>
+                    <a-button v-on:click="toogleModel()" :size="'large'"> Add Todo </a-button>
                 </div>
                 <!--  -->
                 <div class="bg-gray-100 border border-gray-600 p-4 ml-3 rounded-xl">

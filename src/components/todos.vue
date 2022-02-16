@@ -160,6 +160,7 @@ const columns = [
         key: "id",
         title: "id",
         scopedSlots: { customRender: "id" },
+        sorter: (a, b) => a.number - b.number,
     },
     {
         dataIndex: "todo",
