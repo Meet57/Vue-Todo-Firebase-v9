@@ -35,10 +35,10 @@ export const store = new Vuex.Store({
             return state.todos.length;
         },
         completedTasks(state) {
-            return state.todos.filter((todo) => todo.status);
+            return state.todos.filter((todo) => todo.status).sort((a, b) => a.number - b.number);
         },
         incompletedTasks(state) {
-            return state.todos.filter((todo) => !todo.status);
+            return state.todos.filter((todo) => !todo.status).sort((a, b) => a.number - b.number);
         },
         incompletedTaskColor(state) {
             let l = state.todos.map((todo) => {
@@ -161,121 +161,6 @@ export const store = new Vuex.Store({
 //         todo: "Marmota caligata",
 //         status: true,
 //         color: "#18bb71",
-//     },
-//     {
-//         todo: "Aegypius tracheliotus",
-//         status: false,
-//         color: "#5d20ae",
-//     },
-//     {
-//         todo: "Procyon cancrivorus",
-//         status: true,
-//         color: "#2677e2",
-//     },
-//     {
-//         todo: "Gyps bengalensis",
-//         status: true,
-//         color: "#70c6ab",
-//     },
-//     {
-//         todo: "Nasua nasua",
-//         status: true,
-//         color: "#2926d3",
-//     },
-//     {
-//         todo: "Thylogale stigmatica",
-//         status: true,
-//         color: "#28ae55",
-//     },
-//     {
-//         todo: "Tauraco porphyrelophus",
-//         status: false,
-//         color: "#b013b2",
-//     },
-//     {
-//         todo: "Recurvirostra avosetta",
-//         status: false,
-//         color: "#c47a5b",
-//     },
-//     {
-//         todo: "Ictonyx striatus",
-//         status: false,
-//         color: "#886cde",
-//     },
-//     {
-//         todo: "Ramphastos tucanus",
-//         status: false,
-//         color: "#bde89d",
-//     },
-//     {
-//         todo: "Paradoxurus hermaphroditus",
-//         status: false,
-//         color: "#8fc31a",
-//     },
-//     {
-//         todo: "Lamprotornis nitens",
-//         status: false,
-//         color: "#999c6a",
-//     },
-//     {
-//         todo: "Acanthaster planci",
-//         status: true,
-//         color: "#878fd0",
-//     },
-//     {
-//         todo: "Platalea leucordia",
-//         status: true,
-//         color: "#f23b72",
-//     },
-//     {
-//         todo: "Tamiasciurus hudsonicus",
-//         status: false,
-//         color: "#653c48",
-//     },
-//     {
-//         todo: "Zonotrichia capensis",
-//         status: false,
-//         color: "#3ae549",
-//     },
-//     {
-//         todo: "Xerus sp.",
-//         status: false,
-//         color: "#b6ce93",
-//     },
-//     {
-//         todo: "Graspus graspus",
-//         status: false,
-//         color: "#020de2",
-//     },
-//     {
-//         todo: "Casmerodius albus",
-//         status: true,
-//         color: "#018a20",
-//     },
-//     {
-//         todo: "Colobus guerza",
-//         status: true,
-//         color: "#7cabba",
-//     },
-//     {
-//         todo: "Acridotheres tristis",
-//         status: false,
-//         color: "#581e47",
-//     },
-//     {
-//         todo: "Phoeniconaias minor",
-//         status: false,
-//         color: "#54e9ec",
-//     },
-//     {
-//         todo: "Agkistrodon piscivorus",
-//         status: false,
-//         color: "#d3a67d",
-//     },
-//     {
-//         todo: "Ciconia episcopus",
-//         status: true,
-//         color: "#f45497",
 //     },
 // ];
 

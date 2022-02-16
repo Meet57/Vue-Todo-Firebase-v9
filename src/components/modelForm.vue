@@ -69,8 +69,9 @@ export default {
             let todo = this.details.todo;
             let id = this.details.id || null;
             let update = true;
+            let alltodo = [...this.AllTodos];
             if (todo != "") {
-                this.AllTodos.map((t) => {
+                alltodo.map((t) => {
                     if (t.todo.toUpperCase() == todo.toUpperCase()) {
                         if (t.id != id) {
                             update = false;

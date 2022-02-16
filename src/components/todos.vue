@@ -187,6 +187,13 @@ const columns = [
         dataIndex: "todo",
         key: "todo",
         title: "todo",
+        sorter: (a, b) => {
+            var nameA = a.todo.toLowerCase(),
+                nameB = b.todo.toLowerCase();
+            if (nameA < nameB) return -1;
+            else if (nameA > nameB) return 1;
+            return 0;
+        },
     },
     {
         dataIndex: "status",
