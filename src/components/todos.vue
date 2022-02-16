@@ -96,22 +96,6 @@
                         </a-popconfirm>
                     </template>
                 </a-table>
-                <!-- <table v-if="incompletedTasks.length > 0" class="w-full">
-                    <tr class="p-3 bg-gray-300">
-                        <th class="text-left px-5 py-3 w-1/5">ID</th>
-                        <th class="text-left px-5 py-3 w-2/5">TODO</th>
-                        <th class="text-left px-5 py-3 w-1/5">STATUS</th>
-                        <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
-                    </tr>
-                    <todo v-for="row in incompletedTasks" :key="row.id" :row="row" />
-                </table>
-                <div
-                    v-else
-                    class="bg-blue-100 w-1/5 text-center p-3 m-3 text-blue-800 text-xs font-semibold mr-2 rounded dark:bg-blue-200 dark:text-blue-800"
-                >
-                    No Todo Here
-                </div> -->
-                <!-- Table over -->
             </a-tab-pane>
             <a-tab-pane key="complete">
                 <template #tab>
@@ -123,21 +107,44 @@
                     </span>
                 </template>
                 <!-- Table -->
-                <table v-if="completedTasks.length > 0" class="w-full">
-                    <tr class="p-3 bg-gray-300">
-                        <th class="text-left px-5 py-3 w-1/5">ID</th>
-                        <th class="text-left px-5 py-3 w-2/5">TODO</th>
-                        <th class="text-left px-5 py-3 w-1/5">STATUS</th>
-                        <th class="text-left px-5 py-3 w-1/5">ACTIONS</th>
-                    </tr>
-                    <todo v-for="row in completedTasks" :key="row.id" :row="row" />
-                </table>
-                <div
-                    v-else
-                    class="bg-blue-100 w-1/5 text-center p-3 m-3 text-blue-800 text-xs font-semibold mr-2 rounded dark:bg-blue-200 dark:text-blue-800"
+                <a-table
+                    :columns="columns"
+                    :data-source="completedTasks"
+                    :pagination="{ pageSize: 20 }"
+                    :scroll="{ y: 450 }"
+                    :rowKey="(t) => t.id"
                 >
-                    No Todo Here
-                </div>
+                    <template #id="text, record">
+                        <div
+                            class="rounded-full mr-2"
+                            :style="{
+                                backgroundColor: record.color,
+                                height: '15px',
+                                width: '15px',
+                                display: 'inline-block',
+                            }"
+                        ></div>
+                        {{ record.number }}
+                    </template>
+                    <template #status="text, record">
+                        <i
+                            class="far fa-check-circle fa-lg"
+                            style="color: pink"
+                            v-on:click="toggleStatus(record.id, record.status)"
+                        ></i>
+                    </template>
+                    <template #actions="text, record">
+                        <i
+                            class="far fa-edit fa-lg mr-3"
+                            :style="{ color: '#5ef7ff' }"
+                            v-on:click="updateTodoData(record)"
+                        ></i>
+                        <a-popconfirm title="Are you sure？" @confirm="deleteTodo(record.id)">
+                            <a-icon slot="icon" type="question-circle-o" style="color: red" />
+                            <i class="far fa-trash-alt fa-lg" :style="{ color: '#ff5e5e' }"></i>
+                        </a-popconfirm>
+                    </template>
+                </a-table>
                 <!-- Table Over -->
             </a-tab-pane>
         </a-tabs>
@@ -145,7 +152,7 @@
 </template>
 
 <script>
-import todo from "./todo.vue";
+// import todo from "./todo.vue";
 
 const columns = [
     {
@@ -176,7 +183,7 @@ const columns = [
 export default {
     name: "AllTodos",
     components: {
-        todo: todo,
+        // todo: todo,
         // DownOutlined: DownOutlined,
     },
     data() {

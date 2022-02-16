@@ -2,12 +2,30 @@
     <div>
         <a-modal
             :visible="visible"
-            title="Basic Modal"
+            :title="details && details.id ? 'Edit Form' : 'Add Form'"
             :closable="false"
             @ok="handleOk"
             @cancel="closeModel"
         >
-            {{ details }}
+            <input
+                type="text"
+                placeholder="Todo"
+                :value="details.todo"
+                class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                autofocus
+                ref="todo"
+                @input="updateTask($event.target.value)"
+                autocomplete="off"
+            />
+            Pick Color :
+            <input
+                type="color"
+                :value="details.color"
+                name="color"
+                class="rounded-lg my-2"
+                @input="updateColor($event.target.value)"
+            />
+            <br />
         </a-modal>
     </div>
 </template>
@@ -16,6 +34,17 @@ export default {
     props: {
         details: {
             type: Object,
+            default() {
+                return {
+                    todo: "",
+                    color: "#ddd",
+                };
+            },
+        },
+    },
+    computed: {
+        AllTodos() {
+            return this.$store.getters.AllTodos;
         },
     },
     data() {
@@ -24,6 +53,12 @@ export default {
         };
     },
     methods: {
+        updateTask(value) {
+            this.$emit("updateTask", value);
+        },
+        updateColor(value) {
+            this.$emit("updateColor", value);
+        },
         closeModel() {
             this.visible = false;
             setTimeout(() => {
@@ -31,10 +66,28 @@ export default {
             }, 400);
         },
         handleOk() {
-            this.visible = false;
-            setTimeout(() => {
-                this.$emit("toogleModel");
-            }, 400);
+            let todo = this.details.todo;
+            let id = this.details.id || null;
+            let update = true;
+            if (todo != "") {
+                this.AllTodos.map((t) => {
+                    if (t.todo.toUpperCase() == todo.toUpperCase()) {
+                        if (t.id != id) {
+                            update = false;
+                        }
+                    }
+                });
+                if (update) {
+                    this.visible = false;
+                    setTimeout(() => {
+                        this.$emit("SubmitTodo");
+                    }, 400);
+                } else {
+                    this.$store.commit("updateAlert", { text: "Todo Repeated" });
+                }
+            } else {
+                this.$store.commit("updateAlert", { text: "Please enter some text" });
+            }
         },
     },
 };
