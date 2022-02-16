@@ -152,8 +152,6 @@
 </template>
 
 <script>
-// import todo from "./todo.vue";
-
 const columns = [
     {
         dataIndex: "id",
@@ -183,10 +181,7 @@ const columns = [
 
 export default {
     name: "AllTodos",
-    components: {
-        // todo: todo,
-        // DownOutlined: DownOutlined,
-    },
+    components: {},
     data() {
         return {
             tab: "incomplete",

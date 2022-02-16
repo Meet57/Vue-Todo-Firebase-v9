@@ -2,7 +2,7 @@
     <div>
         <a-modal
             :visible="visible"
-            :title="details && details.id ? 'Edit Form' : 'Add Form'"
+            :title="details.id ? 'Edit Todo : ' + details.number : 'Add Todo'"
             :closable="false"
             @ok="handleOk"
             @cancel="closeModel"
@@ -86,7 +86,7 @@ export default {
                     this.$store.commit("updateAlert", { text: "Todo Repeated" });
                 }
             } else {
-                this.$store.commit("updateAlert", { text: "Please enter some text" });
+                this.$store.commit("updateAlert", { text: "Please enter todo title" });
             }
         },
     },

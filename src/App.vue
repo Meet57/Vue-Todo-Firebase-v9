@@ -8,20 +8,19 @@
                 </div>
             </div>
         </div>
-        <div class="container mx-auto my-7">
+        <div class="container mx-auto my-2">
             <alert />
-            <div class="flex items-center justify-between mb-5">
+            <div class="flex items-end justify-between">
                 <div>
                     <a-button v-on:click="toogleModel()" :size="'large'"> Add Todo </a-button>
                 </div>
-                <!--  -->
-                <div class="bg-gray-100 border border-gray-600 p-4 ml-3 rounded-xl">
+                <a-card style="width: fit-content">
                     <i class="far fa-check-circle fa-lg" :style="{ color: 'cyan' }"></i> - Task
                     Completed
                     <br />
                     <i class="far fa-check-circle fa-lg" :style="{ color: 'pink' }"></i> - Task
                     Inomplete
-                </div>
+                </a-card>
             </div>
             <model-form
                 v-if="visible"
@@ -31,8 +30,6 @@
                 @toogleModel="toogleModel"
                 @SubmitTodo="SubmitTodo"
             />
-            <!-- <edit-model /> -->
-            <!-- <add-todo /> -->
             <todos @updateTodoData="updateTodoData" />
         </div>
     </div>
@@ -40,9 +37,7 @@
 
 <script>
 import todos from "./components/todos.vue";
-// import addTodo from "./components/addTodo.vue";
 import alert from "./components/Alert.vue";
-// import editModel from "./components/editModel.vue";
 import modelForm from "./components/modelForm.vue";
 
 export default {
