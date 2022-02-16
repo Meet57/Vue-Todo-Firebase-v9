@@ -38,7 +38,7 @@
                 </a-select>
                 <a-select
                     v-else
-                    class="w-1/3"
+                    class="w-full"
                     mode="multiple"
                     :value="completedFilter"
                     :title="'Complete Task Filter'"
