@@ -94,7 +94,7 @@
                 <a-table
                     :columns="columns"
                     :data-source="incompletedTasks"
-                    :pagination="{ pageSize: 20 }"
+                    :pagination="{ pageSize: 10 }"
                     :scroll="{ y: 450 }"
                     :rowKey="(t) => t.id"
                 >
@@ -236,11 +236,9 @@ export default {
     },
     methods: {
         deleteTodo(id) {
-            // console.log(id);
             this.$store.commit("deleteTodo", { id });
         },
         toggleStatus(id, status) {
-            // console.log(id);
             this.$store.commit("toogleStatus", { id, status });
         },
         filterChangeComplete(value) {

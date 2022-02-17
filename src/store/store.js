@@ -12,6 +12,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import db from "../firebase";
 import { name } from "ntcjs";
+import _ from "lodash";
 
 Vue.use(Vuex);
 
@@ -25,11 +26,8 @@ export const store = new Vuex.Store({
         editComponent: null,
     },
     getters: {
-        getAlert(state) {
+        Alert(state) {
             return state.alert;
-        },
-        getEditDetails(state) {
-            return state.editComponent;
         },
         numberOftodos(state) {
             return state.todos.length;
@@ -44,15 +42,14 @@ export const store = new Vuex.Store({
             let l = state.todos.map((todo) => {
                 if (!todo.status) return { colorName: todo.colorName, color: todo.color };
             });
-
-            return Array.from(new Set(l.filter((o) => o).map(JSON.stringify))).map(JSON.parse);
+            return _.uniqBy(l, "color").filter((o) => o);
         },
         completedTaskColor(state) {
             let l = state.todos.map((todo) => {
                 if (todo.status) return { colorName: todo.colorName, color: todo.color };
             });
 
-            return Array.from(new Set(l.filter((o) => o).map(JSON.stringify))).map(JSON.parse);
+            return _.uniqBy(l, "color").filter((o) => o);
         },
         AllTodos(state) {
             return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? 1 : -1));
@@ -90,29 +87,10 @@ export const store = new Vuex.Store({
                 state.todos = todos;
             });
         },
-        editTodo(state, payload) {
-            state.editComponent = payload;
-        },
-        cancelTodo(state) {
-            state.editComponent = null;
-        },
         updateTodo(state, payload) {
             let docRef = doc(db, payload.id);
             let colorName = name(payload.color)[1];
             updateDoc(docRef, { ...payload, colorName: colorName });
-            // let update = true;
-            // state.todos.forEach((task) => {
-            //     if (task.todo.toUpperCase() == payload.todo.toUpperCase()) {
-            //         update = false;
-            //     }
-            // });
-            // if (update) {
-            // } else {
-            //     state.alert = "Todo Already Exist";
-            //     setTimeout(() => {
-            //         state.alert = "";
-            //     }, 3000);
-            // }
         },
         toogleStatus(state, payload) {
             let docRef = doc(db, payload.id);

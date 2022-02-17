@@ -39,9 +39,7 @@ export default {
     },
     components: {
         todos,
-        // addTodo,
         alert,
-        // "edit-model": editModel,
         "model-form": modelForm,
     },
     methods: {

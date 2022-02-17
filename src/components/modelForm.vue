@@ -67,7 +67,6 @@ export default {
             this.$emit("updateTask", value);
         },
         updateColor(value) {
-            console.log(value);
             this.$emit("updateColor", value);
         },
         updateStatus(value) {
