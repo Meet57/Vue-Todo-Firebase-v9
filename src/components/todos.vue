@@ -58,6 +58,24 @@
                         {{ i.colorName }}
                     </a-select-option>
                 </a-select>
+                <a-input-search
+                    v-if="tab == 'incomplete'"
+                    v-model="incompleteSearch"
+                    class="mt-3"
+                    placeholder="input search text"
+                    enter-button
+                    :allowClear="true"
+                />
+                <a-input-search
+                    v-else
+                    v-model="completeSearch"
+                    class="mt-3"
+                    placeholder="input search text"
+                    enter-button
+                    :allowClear="true"
+                />
+                <br />
+
                 <!-- filter end -->
             </div>
             <a-card style="width: fit-content">
@@ -220,6 +238,8 @@ export default {
             completedFilter: [],
             incompletedFilter: [],
             columns,
+            incompleteSearch: "",
+            completeSearch: "",
         };
     },
     watch: {},
@@ -247,18 +267,38 @@ export default {
     },
     computed: {
         completedTasks() {
-            if (this.completedFilter.length > 0) {
+            if (this.completeSearch.length > 0 && this.completedFilter.length > 0) {
+                return this.$store.getters.completedTasks.filter(
+                    (t) =>
+                        t.todo.toLowerCase().includes(this.completeSearch.toLowerCase()) &&
+                        this.completedFilter.includes(t.color)
+                );
+            } else if (this.completedFilter.length > 0) {
                 return this.$store.getters.completedTasks.filter((t) =>
                     this.completedFilter.includes(t.color)
+                );
+            } else if (this.completeSearch.length > 0) {
+                return this.$store.getters.completedTasks.filter((t) =>
+                    t.todo.toLowerCase().includes(this.completeSearch.toLowerCase())
                 );
             } else {
                 return this.$store.getters.completedTasks;
             }
         },
         incompletedTasks() {
-            if (this.incompletedFilter.length > 0) {
+            if (this.incompleteSearch.length > 0 && this.incompletedFilter.length > 0) {
+                return this.$store.getters.incompletedTasks.filter(
+                    (t) =>
+                        t.todo.toLowerCase().includes(this.incompleteSearch.toLowerCase()) &&
+                        this.incompletedFilter.includes(t.color)
+                );
+            } else if (this.incompletedFilter.length > 0) {
                 return this.$store.getters.incompletedTasks.filter((t) =>
                     this.incompletedFilter.includes(t.color)
+                );
+            } else if (this.incompleteSearch.length > 0) {
+                return this.$store.getters.incompletedTasks.filter((t) =>
+                    t.todo.toLowerCase().includes(this.incompleteSearch.toLowerCase())
                 );
             } else {
                 return this.$store.getters.incompletedTasks;
