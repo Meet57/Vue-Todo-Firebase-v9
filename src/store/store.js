@@ -65,7 +65,7 @@ export const store = new Vuex.Store({
         },
     },
     mutations: {
-        updateAlert(state, payload) {
+        alert(state, payload) {
             state.alert = payload.text;
             setTimeout(() => {
                 state.alert = "";

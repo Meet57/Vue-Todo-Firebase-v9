@@ -2,7 +2,7 @@
     <div>
         <a-modal
             :visible="visible"
-            :title="details.id ? 'Edit Todo : ' + details.number : 'Add Todo'"
+            :title="task.id ? 'Edit Todo : ' + task.number : 'Add Todo'"
             :closable="false"
             @ok="handleOk"
             @cancel="closeModel"
@@ -10,23 +10,16 @@
             <input
                 type="text"
                 placeholder="Todo"
-                :value="details.todo"
+                v-model="task.todo"
                 class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 autofocus
                 ref="todo"
-                @input="updateTask($event.target.value)"
                 autocomplete="off"
             />
             Pick Color :
-            <input
-                type="color"
-                :value="details.color"
-                name="color"
-                class="rounded-lg my-2"
-                @input="updateColor($event.target.value)"
-            />
+            <input type="color" v-model="task.color" name="color" class="rounded-lg my-2" />
             <br />
-            <a-radio-group v-model="details.color">
+            <a-radio-group v-model="task.color">
                 <a-radio-button value="#FF0000"> Red </a-radio-button>
                 <a-radio-button value="#0000FF"> Blue </a-radio-button>
                 <a-radio-button value="#00FF00"> Green </a-radio-button>
@@ -35,7 +28,7 @@
             <br />
             <br />
             Status :
-            <a-switch :checked="details.status" @change="updateStatus" />
+            <a-switch v-model="task.status" />
         </a-modal>
     </div>
 </template>
@@ -60,18 +53,10 @@ export default {
     data() {
         return {
             visible: true,
+            task: { ...this.details },
         };
     },
     methods: {
-        updateTask(value) {
-            this.$emit("updateTask", value);
-        },
-        updateColor(value) {
-            this.$emit("updateColor", value);
-        },
-        updateStatus(value) {
-            this.$emit("updateStatus", value);
-        },
         closeModel() {
             this.visible = false;
             setTimeout(() => {
@@ -79,8 +64,8 @@ export default {
             }, 400);
         },
         handleOk() {
-            let todo = this.details.todo;
-            let id = this.details.id || null;
+            let todo = this.task.todo;
+            let id = this.task.id || null;
             let update = true;
             let alltodo = [...this.AllTodos];
             if (todo != "") {
@@ -94,13 +79,13 @@ export default {
                 if (update) {
                     this.visible = false;
                     setTimeout(() => {
-                        this.$emit("SubmitTodo");
+                        this.$emit("submit", this.task);
                     }, 400);
                 } else {
-                    this.$store.commit("updateAlert", { text: "Todo Repeated" });
+                    this.$store.commit("alert", { text: "Todo Repeated" });
                 }
             } else {
-                this.$store.commit("updateAlert", { text: "Please enter todo title" });
+                this.$store.commit("alert", { text: "Please enter todo title" });
             }
         },
     },

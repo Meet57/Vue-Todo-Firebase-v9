@@ -162,7 +162,7 @@
                     <template #status="text, record">
                         <i
                             class="far fa-check-circle fa-lg"
-                            style="color: pink"
+                            style="color: cyan"
                             v-on:click="toggleStatus(record.id, record.status)"
                         ></i>
                     </template>

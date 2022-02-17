@@ -13,11 +13,8 @@
             <model-form
                 v-if="visible"
                 :details="modelTodoData"
-                @updateTask="(task) => (this.modelTodoData.todo = task)"
-                @updateColor="(color) => (this.modelTodoData.color = color)"
-                @updateStatus="(status) => (this.modelTodoData.status = status)"
                 @toogleModel="toogleModel"
-                @SubmitTodo="SubmitTodo"
+                @submit="submit"
             />
             <todos @updateTodoData="updateTodoData" @toogleModel="toogleModel" />
         </div>
@@ -25,9 +22,9 @@
 </template>
 
 <script>
-import todos from "./components/todos.vue";
+import todos from "./components/Todos";
 import alert from "./components/Alert.vue";
-import modelForm from "./components/modelForm.vue";
+import modelForm from "./components/ModelForm";
 
 export default {
     name: "Main",
@@ -59,16 +56,16 @@ export default {
             this.visible = true;
             this.modelTodoData = { ...content };
         },
-        SubmitTodo() {
-            if (this.modelTodoData.id) {
+        submit(data) {
+            if (data.id) {
                 this.$store.commit("updateTodo", {
-                    todo: this.modelTodoData.todo,
-                    id: this.modelTodoData.id,
-                    color: this.modelTodoData.color,
-                    status: this.modelTodoData.status,
+                    todo: data.todo,
+                    id: data.id,
+                    color: data.color,
+                    status: data.status,
                 });
             } else {
-                this.$store.commit("addTodo", this.modelTodoData);
+                this.$store.commit("addTodo", this.data);
             }
             this.visible = false;
             this.modelTodoData = null;
