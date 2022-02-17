@@ -17,10 +17,10 @@
                 <a-select
                     v-if="tab == 'incomplete'"
                     class="w-full"
-                    :title="'Incomplete Task Filter'"
+                    :title="'Filter by color'"
                     mode="multiple"
                     :value="incompletedFilter"
-                    :placeholder="'Incomplete Task Filter'"
+                    :placeholder="'Filter by color'"
                     @change="filterChangeIncomplete"
                 >
                     <a-select-option v-for="i in incompletedTaskColor" :key="i.color">
@@ -41,9 +41,9 @@
                     class="w-full"
                     mode="multiple"
                     :value="completedFilter"
-                    :title="'Complete Task Filter'"
+                    :title="'Filter by color'"
                     @change="filterChangeComplete"
-                    :placeholder="'Complete Task Filter'"
+                    :placeholder="'Filter by color'"
                 >
                     <a-select-option v-for="i in completedTaskColor" :key="i.color">
                         <div
@@ -59,17 +59,9 @@
                     </a-select-option>
                 </a-select>
                 <a-input-search
-                    v-if="tab == 'incomplete'"
-                    v-model="incompleteSearch"
                     class="mt-3"
-                    placeholder="input search text"
-                    enter-button
-                    :allowClear="true"
-                />
-                <a-input-search
-                    v-else
-                    v-model="completeSearch"
-                    class="mt-3"
+                    :value="tab == 'incomplete' ? incompleteSearch : completeSearch"
+                    @input="searchChange($event.target.value)"
                     placeholder="input search text"
                     enter-button
                     :allowClear="true"
@@ -242,7 +234,6 @@ export default {
             completeSearch: "",
         };
     },
-    watch: {},
     methods: {
         deleteTodo(id) {
             // console.log(id);
@@ -263,6 +254,13 @@ export default {
         },
         updateTodoData(data) {
             this.$emit("updateTodoData", data);
+        },
+        searchChange(value) {
+            if (this.tab == "incomplete") {
+                this.incompleteSearch = value;
+            } else {
+                this.completeSearch = value;
+            }
         },
     },
     computed: {
