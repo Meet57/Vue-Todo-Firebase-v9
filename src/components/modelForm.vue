@@ -26,6 +26,14 @@
                 @input="updateColor($event.target.value)"
             />
             <br />
+            <a-radio-group v-model="details.color">
+                <a-radio-button value="#FF0000"> Red </a-radio-button>
+                <a-radio-button value="#0000FF"> Blue </a-radio-button>
+                <a-radio-button value="#00FF00"> Green </a-radio-button>
+                <a-radio-button value="#000000"> Black </a-radio-button>
+            </a-radio-group>
+            <br />
+            <br />
             Status :
             <a-switch :checked="details.status" @change="updateStatus" />
         </a-modal>
@@ -59,6 +67,7 @@ export default {
             this.$emit("updateTask", value);
         },
         updateColor(value) {
+            console.log(value);
             this.$emit("updateColor", value);
         },
         updateStatus(value) {
