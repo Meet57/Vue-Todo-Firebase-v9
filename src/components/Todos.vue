@@ -225,52 +225,26 @@ export default {
             },
         },
         completedTasks() {
+            var list = this.$store.getters.completedTasks;
             const { colorList, searchText } = this.completeFilter;
-            if (searchText.length > 0 || colorList.length > 0) {
-                return this.$store.getters.completedTasks
-                    .filter(
-                        (t) =>
-                            searchText.length == 0 ||
-                            t.todo.toLowerCase().includes(searchText.toLowerCase())
-                    )
-                    .filter((t) => colorList.length == 0 || colorList.includes(t.color));
+            if (colorList.length) {
+                list = list.filter((t) => colorList.includes(t.color));
             }
-            // else if (colorList.length > 0) {
-            //     return this.$store.getters.completedTasks.filter((t) =>
-            //         colorList.includes(t.color)
-            //     );
-            // } else if (searchText.length > 0) {
-            //     return this.$store.getters.completedTasks.filter((t) =>
-            //         t.todo.toLowerCase().includes(searchText.toLowerCase())
-            //     );
-            // }
-            else {
-                return this.$store.getters.completedTasks;
+            if (searchText.length) {
+                list = list.filter((t) => t.todo.toLowerCase().includes(searchText.toLowerCase()));
             }
+            return list;
         },
         incompletedTasks() {
+            var list = this.$store.getters.incompletedTasks;
             const { colorList, searchText } = this.incompleteFilter;
-            if (searchText.length > 0 || colorList.length > 0) {
-                return this.$store.getters.incompletedTasks
-                    .filter(
-                        (t) =>
-                            searchText.length == 0 ||
-                            t.todo.toLowerCase().includes(searchText.toLowerCase())
-                    )
-                    .filter((t) => colorList.length == 0 || colorList.includes(t.color));
+            if (colorList.length) {
+                list = list.filter((t) => colorList.includes(t.color));
             }
-            // else if (colorList.length > 0) {
-            //     return this.$store.getters.incompletedTasks.filter((t) =>
-            //         colorList.includes(t.color)
-            //     );
-            // } else if (searchText.length > 0) {
-            //     return this.$store.getters.incompletedTasks.filter((t) =>
-            //         t.todo.toLowerCase().includes(searchText.toLowerCase())
-            //     );
-            // }
-            else {
-                return this.$store.getters.incompletedTasks;
+            if (searchText.length) {
+                list = list.filter((t) => t.todo.toLowerCase().includes(searchText.toLowerCase()));
             }
+            return list;
         },
         ...mapGetters(["completedTaskColor", "incompletedTaskColor"]),
     },
