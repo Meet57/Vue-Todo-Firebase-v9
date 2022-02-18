@@ -4,7 +4,7 @@
             <div class="container mx-auto flex items-center justify-between">
                 <div class="text-red-100 text-4xl">Todo</div>
                 <div class="text-red-200 text-1xl">
-                    Number of Todos : {{ noOfTodos }} | Incomplete task : {{ incompleteTask }}
+                    Number of Todos : {{ numberOftodos }} | Incomplete task : {{ incompleteTask }}
                 </div>
             </div>
         </div>
@@ -25,6 +25,7 @@
 import todos from "./components/Todos";
 import alert from "./components/Alert.vue";
 import modelForm from "./components/ModelForm";
+import { mapGetters } from "vuex";
 
 export default {
     name: "Main",
@@ -65,19 +66,20 @@ export default {
                     status: data.status,
                 });
             } else {
-                this.$store.commit("addTodo", this.data);
+                this.$store.commit("addTodo", data);
             }
             this.visible = false;
             this.modelTodoData = null;
         },
     },
     computed: {
-        noOfTodos() {
-            return this.$store.getters.numberOftodos;
-        },
-        incompleteTask() {
-            return this.$store.getters.incompleteTask;
-        },
+        ...mapGetters(["numberOftodos", "incompleteTask"]),
+        // noOfTodos() {
+        //     return this.$store.getters.numberOftodos;
+        // },
+        // incompleteTask() {
+        //     return this.$store.getters.incompleteTask;
+        // },
     },
     created() {
         this.$store.commit("getTodo");

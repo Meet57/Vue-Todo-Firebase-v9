@@ -133,6 +133,8 @@
 
 <script>
 import CustomFilterVue from "./CustomFilter.vue";
+import { mapGetters } from "vuex";
+
 const columns = [
     {
         dataIndex: "id",
@@ -168,7 +170,7 @@ const columns = [
 ];
 
 export default {
-    name: "AllTodos",
+    name: "allTodos",
     components: {
         "custome-filter": CustomFilterVue,
     },
@@ -262,15 +264,16 @@ export default {
                 return this.$store.getters.incompletedTasks;
             }
         },
-        noOfTodos() {
-            return this.$store.getters.numberOftodos;
-        },
-        completedTaskColor() {
-            return this.$store.getters.completedTaskColor;
-        },
-        incompletedTaskColor() {
-            return this.$store.getters.incompletedTaskColor;
-        },
+        ...mapGetters(["noOfTodos", "completedTaskColor", "incompletedTaskColor"]),
+        // noOfTodos() {
+        //     return this.$store.getters.numberOftodos;
+        // },
+        // completedTaskColor() {
+        //     return this.$store.getters.completedTaskColor;
+        // },
+        // incompletedTaskColor() {
+        //     return this.$store.getters.incompletedTaskColor;
+        // },
     },
 };
 </script>

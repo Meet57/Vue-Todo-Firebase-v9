@@ -10,12 +10,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "Alert",
     computed: {
-        Alert() {
-            return this.$store.getters.Alert;
-        },
+        ...mapGetters(["Alert"]),
     },
 };
 </script>

@@ -51,7 +51,7 @@ export const store = new Vuex.Store({
 
             return _.uniqBy(l, "color").filter((o) => o);
         },
-        AllTodos(state) {
+        allTodos(state) {
             return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? 1 : -1));
         },
         incompleteTask(state) {
