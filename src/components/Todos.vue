@@ -14,60 +14,7 @@
                     Add Todo
                 </a-button>
                 <!-- filter -->
-                <a-select
-                    v-if="tab == 'incomplete'"
-                    class="w-full"
-                    :title="'Filter by color'"
-                    mode="multiple"
-                    :value="incompletedFilter"
-                    :placeholder="'Filter by color'"
-                    @change="filterChangeIncomplete"
-                >
-                    <a-select-option v-for="i in incompletedTaskColor" :key="i.color">
-                        <div
-                            class="rounded-full mr-3"
-                            :style="{
-                                backgroundColor: i.color,
-                                height: '15px',
-                                width: '15px',
-                                display: 'inline-block',
-                            }"
-                        ></div>
-                        {{ i.colorName }}
-                    </a-select-option>
-                </a-select>
-                <a-select
-                    v-else
-                    class="w-full"
-                    mode="multiple"
-                    :value="completedFilter"
-                    :title="'Filter by color'"
-                    @change="filterChangeComplete"
-                    :placeholder="'Filter by color'"
-                >
-                    <a-select-option v-for="i in completedTaskColor" :key="i.color">
-                        <div
-                            class="rounded-full mr-3"
-                            :style="{
-                                backgroundColor: i.color,
-                                height: '15px',
-                                width: '15px',
-                                display: 'inline-block',
-                            }"
-                        ></div>
-                        {{ i.colorName }}
-                    </a-select-option>
-                </a-select>
-                <a-input-search
-                    class="mt-3"
-                    :value="tab == 'incomplete' ? incompleteSearch : completeSearch"
-                    @input="searchChange($event.target.value)"
-                    placeholder="input search text"
-                    enter-button
-                    :allowClear="true"
-                />
-                <br />
-
+                <custome-filter v-model="filter" />
                 <!-- filter end -->
             </div>
             <a-card style="width: fit-content">
@@ -185,6 +132,7 @@
 </template>
 
 <script>
+import CustomFilterVue from "./CustomFilter.vue";
 const columns = [
     {
         dataIndex: "id",
@@ -221,18 +169,33 @@ const columns = [
 
 export default {
     name: "AllTodos",
-    components: {},
+    components: {
+        "custome-filter": CustomFilterVue,
+    },
     data() {
         return {
             tab: "incomplete",
-            filter: [],
             model: false,
-            completedFilter: [],
-            incompletedFilter: [],
+            incompleteFilter: {
+                colorList: [],
+                searchText: "",
+                list: [],
+            },
+            completeFilter: {
+                colorList: [],
+                searchText: "",
+                list: [],
+            },
             columns,
-            incompleteSearch: "",
-            completeSearch: "",
         };
+    },
+    watch: {
+        incompletedTaskColor(newv) {
+            this.incompleteFilter.list = newv;
+        },
+        completedTaskColor(newv) {
+            this.completeFilter.list = newv;
+        },
     },
     methods: {
         deleteTodo(id) {
@@ -241,60 +204,59 @@ export default {
         toggleStatus(id, status) {
             this.$store.commit("toogleStatus", { id, status });
         },
-        filterChangeComplete(value) {
-            this.completedFilter = value;
-        },
-        filterChangeIncomplete(value) {
-            this.incompletedFilter = value;
-        },
         callback(key) {
             this.tab = key;
         },
         updateTodoData(data) {
             this.$emit("updateTodoData", data);
         },
-        searchChange(value) {
-            if (this.tab == "incomplete") {
-                this.incompleteSearch = value;
-            } else {
-                this.completeSearch = value;
-            }
-        },
     },
     computed: {
+        filter: {
+            get() {
+                return this.tab == "incomplete" ? this.incompleteFilter : this.completeFilter;
+            },
+            set(newValue) {
+                this.tab == "incomplete"
+                    ? (this.incompleteFilter = newValue)
+                    : (this.completeFilter = newValue);
+            },
+        },
         completedTasks() {
-            if (this.completeSearch.length > 0 && this.completedFilter.length > 0) {
+            const { colorList, searchText } = this.completeFilter;
+            if (searchText.length > 0 && colorList.length > 0) {
                 return this.$store.getters.completedTasks.filter(
                     (t) =>
-                        t.todo.toLowerCase().includes(this.completeSearch.toLowerCase()) &&
-                        this.completedFilter.includes(t.color)
+                        t.todo.toLowerCase().includes(searchText.toLowerCase()) &&
+                        colorList.includes(t.color)
                 );
-            } else if (this.completedFilter.length > 0) {
+            } else if (colorList.length > 0) {
                 return this.$store.getters.completedTasks.filter((t) =>
-                    this.completedFilter.includes(t.color)
+                    colorList.includes(t.color)
                 );
-            } else if (this.completeSearch.length > 0) {
+            } else if (searchText.length > 0) {
                 return this.$store.getters.completedTasks.filter((t) =>
-                    t.todo.toLowerCase().includes(this.completeSearch.toLowerCase())
+                    t.todo.toLowerCase().includes(searchText.toLowerCase())
                 );
             } else {
                 return this.$store.getters.completedTasks;
             }
         },
         incompletedTasks() {
-            if (this.incompleteSearch.length > 0 && this.incompletedFilter.length > 0) {
+            const { colorList, searchText } = this.incompleteFilter;
+            if (searchText.length > 0 && colorList.length > 0) {
                 return this.$store.getters.incompletedTasks.filter(
                     (t) =>
-                        t.todo.toLowerCase().includes(this.incompleteSearch.toLowerCase()) &&
-                        this.incompletedFilter.includes(t.color)
+                        t.todo.toLowerCase().includes(searchText.toLowerCase()) &&
+                        colorList.includes(t.color)
                 );
-            } else if (this.incompletedFilter.length > 0) {
+            } else if (colorList.length > 0) {
                 return this.$store.getters.incompletedTasks.filter((t) =>
-                    this.incompletedFilter.includes(t.color)
+                    colorList.includes(t.color)
                 );
-            } else if (this.incompleteSearch.length > 0) {
+            } else if (searchText.length > 0) {
                 return this.$store.getters.incompletedTasks.filter((t) =>
-                    t.todo.toLowerCase().includes(this.incompleteSearch.toLowerCase())
+                    t.todo.toLowerCase().includes(searchText.toLowerCase())
                 );
             } else {
                 return this.$store.getters.incompletedTasks;
@@ -303,7 +265,6 @@ export default {
         noOfTodos() {
             return this.$store.getters.numberOftodos;
         },
-
         completedTaskColor() {
             return this.$store.getters.completedTaskColor;
         },
