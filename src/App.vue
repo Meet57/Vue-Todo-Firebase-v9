@@ -74,12 +74,6 @@ export default {
     },
     computed: {
         ...mapGetters(["numberOftodos", "incompleteTask"]),
-        // noOfTodos() {
-        //     return this.$store.getters.numberOftodos;
-        // },
-        // incompleteTask() {
-        //     return this.$store.getters.incompleteTask;
-        // },
     },
     created() {
         this.$store.commit("getTodo");

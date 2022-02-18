@@ -34,22 +34,25 @@
 </template>
 
 <script>
+// default listener for vmodel is input but can be changed using model object and passing
+// parameters in it
 export default {
     name: "Custom-Filter",
+    model: { event: "change" },
+    // model: {event: 'change', prop:'checked'},
     props: {
         value: {
             type: Object,
             default: undefined,
         },
     },
-    watch: {},
     computed: {
         colorList: {
             get() {
                 return (this.value || {}).colorList;
             },
             set(colorList) {
-                this.$emit("input", { ...(this.value || {}), colorList });
+                this.$emit("change", { ...(this.value || {}), colorList });
             },
         },
         searchText: {
@@ -57,7 +60,7 @@ export default {
                 return (this.value || {}).searchText;
             },
             set(searchText) {
-                this.$emit("input", { ...(this.value || {}), searchText: searchText });
+                this.$emit("change", { ...(this.value || {}), searchText: searchText });
             },
         },
         list: {
@@ -65,7 +68,7 @@ export default {
                 return (this.value || {}).list;
             },
             set(list) {
-                this.$emit("input", { ...(this.value || {}), list });
+                this.$emit("change", { ...(this.value || {}), list });
             },
         },
     },
