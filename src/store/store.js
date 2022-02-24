@@ -3,27 +3,16 @@ import Vuex from "vuex";
 
 import * as task from "./modules/task";
 import * as auth from "./modules/auth";
+import * as alert from "./modules/alert";
 
 Vue.use(Vuex);
 
 // Create a new store instance.
 export const store = new Vuex.Store({
-    state: {
-        credental: null,
-    },
-    getters: {
-        credental(state) {
-            return state.credental;
-        },
-    },
     modules: {
         task,
         auth,
-    },
-    mutations: {
-        changeCred(state, payload) {
-            state.credental = payload;
-        },
+        alert,
     },
     // strict: true,
     // This will restrict outside files to edit Vuex store

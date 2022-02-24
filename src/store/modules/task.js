@@ -18,13 +18,9 @@ var db = null;
 
 export const state = {
     todos: [],
-    alert: "",
 };
 
 export const getters = {
-    Alert(state) {
-        return state.alert;
-    },
     numberOftodos(state) {
         return state.todos.length;
     },
@@ -62,12 +58,6 @@ export const getters = {
 };
 
 export const mutations = {
-    alert(state, payload) {
-        state.alert = payload.text;
-        setTimeout(() => {
-            state.alert = "";
-        }, 3000);
-    },
     addTodo(state, data) {
         let colorName = name(data.color)[1];
         addDoc(db, { ...data, colorName, createdAt: serverTimestamp() });

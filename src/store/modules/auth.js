@@ -23,7 +23,6 @@ export const actions = {
     init({ commit }) {
         if (getSavedState("cred")) {
             commit("changeCred", getSavedState("cred"));
-            commit("changeCred", getSavedState("cred"), { root: true });
         }
     },
     signIn({ commit }, payload) {
@@ -31,10 +30,10 @@ export const actions = {
             .then((cred) => {
                 saveState("cred", cred);
                 commit("changeCred", cred);
-                commit("changeCred", cred, { root: true });
             })
             .catch((err) => {
                 console.log(err.message);
+                commit("alert/alert", { text: err.message }, { root: true });
             });
     },
     signUp({ commit }, payload) {
@@ -42,10 +41,10 @@ export const actions = {
             .then((cred) => {
                 saveState("cred", cred);
                 commit("changeCred", cred);
-                commit("changeCred", cred, { root: true });
             })
             .catch((err) => {
                 console.log(err.message);
+                commit("alert/alert", { text: err.message }, { root: true });
             });
     },
     signOut({ commit }) {
@@ -53,10 +52,10 @@ export const actions = {
             .then(() => {
                 window.localStorage.removeItem("cred");
                 commit("changeCred", null);
-                commit("changeCred", null, { root: true });
             })
             .catch((err) => {
                 console.log(err.message);
+                commit("alert/alert", { text: err.message }, { root: true });
             });
     },
 };
