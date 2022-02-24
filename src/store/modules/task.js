@@ -14,10 +14,12 @@ import _ from "lodash";
 import { name } from "ntcjs";
 
 var firestore = firebase.db;
+var auth = firebase.auth;
 var db = null;
 
 export const state = {
     todos: [],
+    loading: true,
 };
 
 export const getters = {
@@ -26,6 +28,9 @@ export const getters = {
     },
     completedTasks(state) {
         return state.todos.filter((todo) => todo.status).sort((a, b) => a.number - b.number);
+    },
+    loading(state) {
+        return state.loading;
     },
     incompletedTasks(state) {
         return state.todos.filter((todo) => !todo.status).sort((a, b) => a.number - b.number);
@@ -58,6 +63,10 @@ export const getters = {
 };
 
 export const mutations = {
+    resetDefault(state) {
+        state.todos = [];
+        state.loading = true;
+    },
     addTodo(state, data) {
         let colorName = name(data.color)[1];
         addDoc(db, { ...data, colorName, createdAt: serverTimestamp() });
@@ -65,8 +74,9 @@ export const mutations = {
     getTodo(state) {
         let user = doc(
             collection(firestore, "user"),
-            JSON.parse(localStorage.getItem("cred")).user.uid
+            JSON.parse(localStorage.getItem("cred")).user.uid || auth.currentUser.uid
         );
+        // let user = doc(collection(firestore, "user"),auth.currentUser.uid);
         db = collection(user, "tasks");
         const q = query(db, orderBy("createdAt"));
         onSnapshot(q, (snapshot) => {
@@ -77,6 +87,7 @@ export const mutations = {
                 i++;
             });
             state.todos = todos;
+            state.loading = false;
         });
     },
     updateTodo(state, payload) {
@@ -93,3 +104,5 @@ export const mutations = {
         deleteDoc(docRef);
     },
 };
+
+export const namespaced = true;

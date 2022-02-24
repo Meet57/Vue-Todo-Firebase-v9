@@ -9,11 +9,19 @@ export const getters = {
 };
 
 export const mutations = {
-    alert(state, payload) {
-        console.log("Alert mutation called");
-        state.alert = payload.text;
+    alert(state, text) {
+        state.alert = text;
+    },
+};
+
+export const actions = {
+    alert({ commit }, payload) {
+        console.log(payload, "Form meet-alert");
+        commit("alert", payload.text);
         setTimeout(() => {
-            state.alert = "";
+            commit("alert", "");
         }, 3000);
     },
 };
+
+export const namespaced = true;

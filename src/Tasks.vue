@@ -16,7 +16,6 @@
             </div>
         </div>
         <div class="container mx-auto my-2">
-            <alert />
             <model-form
                 v-if="visible"
                 :details="modelTodoData"
@@ -30,7 +29,6 @@
 
 <script>
 import todos from "./components/Todos";
-import alert from "./components/Alert.vue";
 import modelForm from "./components/ModelForm";
 import { mapGetters } from "vuex";
 
@@ -44,7 +42,6 @@ export default {
     },
     components: {
         todos,
-        alert,
         "model-form": modelForm,
     },
     methods: {
@@ -66,27 +63,27 @@ export default {
         },
         submit(data) {
             if (data.id) {
-                this.$store.commit("updateTodo", {
+                this.$store.commit("task/updateTodo", {
                     todo: data.todo,
                     id: data.id,
                     color: data.color,
                     status: data.status,
                 });
             } else {
-                this.$store.commit("addTodo", data);
+                this.$store.commit("task/addTodo", data);
             }
             this.visible = false;
             this.modelTodoData = null;
         },
         signOut() {
-            this.$store.dispatch("signOut");
+            this.$store.dispatch("auth/signOut");
         },
     },
     computed: {
-        ...mapGetters(["numberOftodos", "incompleteTask"]),
+        ...mapGetters("task", ["numberOftodos", "incompleteTask"]),
     },
     created() {
-        this.$store.commit("getTodo");
+        this.$store.commit("task/getTodo");
     },
 };
 </script>

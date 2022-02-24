@@ -48,7 +48,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["allTodos"]),
+        ...mapGetters("task", ["allTodos"]),
         // allTodos() {
         //     return this.$store.getters.allTodos;
         // },
@@ -85,10 +85,10 @@ export default {
                         this.$emit("submit", this.task);
                     }, 400);
                 } else {
-                    this.$store.commit("alert", { text: "Todo Repeated" });
+                    this.$store.dispatch("alert/alert", { text: "Todo Repeated" });
                 }
             } else {
-                this.$store.commit("alert", { text: "Please enter todo title" });
+                this.$store.dispatch("alert/alert", { text: "Please enter todo title" });
             }
         },
     },

@@ -15,7 +15,7 @@ import { mapGetters } from "vuex";
 export default {
     name: "Alert",
     computed: {
-        ...mapGetters(["alert"]),
+        ...mapGetters("alert", ["alert"]),
     },
 };
 </script>

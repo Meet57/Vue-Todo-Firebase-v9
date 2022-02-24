@@ -74,10 +74,10 @@ export default {
     },
     methods: {
         SignIn() {
-            this.$store.dispatch("signIn", this.signin);
+            this.$store.dispatch("auth/signIn", this.signin);
         },
         SignUp() {
-            this.$store.dispatch("signUp", this.signup);
+            this.$store.dispatch("auth/signUp", this.signup);
         },
     },
 };

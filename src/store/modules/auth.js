@@ -20,12 +20,8 @@ export const mutations = {
 };
 
 export const actions = {
-    init({ commit }) {
-        if (getSavedState("cred")) {
-            commit("changeCred", getSavedState("cred"));
-        }
-    },
-    signIn({ commit }, payload) {
+    // signIn({ commit, ...rest }, payload) {
+    signIn({ commit, dispatch }, payload) {
         signInWithEmailAndPassword(auth, payload.email, payload.password)
             .then((cred) => {
                 saveState("cred", cred);
@@ -33,7 +29,8 @@ export const actions = {
             })
             .catch((err) => {
                 console.log(err.message);
-                commit("alert/alert", { text: err.message }, { root: true });
+                // commit("alert/alert", { text: err.message }, { root: true });
+                dispatch("alert/alert", { text: err.message }, { root: true });
             });
     },
     signUp({ commit }, payload) {
@@ -59,6 +56,8 @@ export const actions = {
             });
     },
 };
+
+export const namespaced = true;
 
 function getSavedState(key) {
     return JSON.parse(window.localStorage.getItem(key));

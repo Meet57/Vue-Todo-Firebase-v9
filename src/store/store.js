@@ -14,11 +14,14 @@ export const store = new Vuex.Store({
         auth,
         alert,
     },
+    actions: {
+        alert(context, payload) {
+            console.log(payload);
+        },
+    },
     // strict: true,
     // This will restrict outside files to edit Vuex store
 });
-
-// dispatchActionForAllModules("init");
 
 // let arr = [
 //     {
