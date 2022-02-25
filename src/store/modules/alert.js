@@ -16,7 +16,6 @@ export const mutations = {
 
 export const actions = {
     alert({ commit }, payload) {
-        console.log(payload, "Form meet-alert");
         commit("alert", payload.text);
         setTimeout(() => {
             commit("alert", "");

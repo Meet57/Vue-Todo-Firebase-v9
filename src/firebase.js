@@ -7,12 +7,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAQz4AW1_-oIUaK4ASSxEUGJo0TfLQfP-M",
-    authDomain: "vue-todo-firebase-375f2.firebaseapp.com",
-    projectId: "vue-todo-firebase-375f2",
-    storageBucket: "vue-todo-firebase-375f2.appspot.com",
-    messagingSenderId: "670568746570",
-    appId: "1:670568746570:web:3a95f56b4d19ce05e020b3",
+    apiKey: "AIzaSyAX3Zl2fHs_WYFf8KY8i5J0GgeXTqPH7Zo",
+    authDomain: "vue-firebase-b8455.firebaseapp.com",
+    projectId: "vue-firebase-b8455",
+    storageBucket: "vue-firebase-b8455.appspot.com",
+    messagingSenderId: "321808385924",
+    appId: "1:321808385924:web:38cad14a68b15e3b23ffd1",
 };
 
 // Initialize Firebase

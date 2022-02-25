@@ -14,7 +14,6 @@ import _ from "lodash";
 import { name } from "ntcjs";
 
 var firestore = firebase.db;
-var auth = firebase.auth;
 var db = null;
 
 export const state = {
@@ -74,7 +73,7 @@ export const mutations = {
     getTodo(state) {
         let user = doc(
             collection(firestore, "user"),
-            JSON.parse(localStorage.getItem("cred")).user.uid || auth.currentUser.uid
+            JSON.parse(localStorage.getItem("cred")).user.uid
         );
         // let user = doc(collection(firestore, "user"),auth.currentUser.uid);
         db = collection(user, "tasks");

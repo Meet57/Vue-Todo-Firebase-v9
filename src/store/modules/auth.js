@@ -1,7 +1,6 @@
-import firebase from "../../firebase";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import Auth from "../../driver/authentication";
 
-var { auth } = firebase;
+const authentication = new Auth();
 
 export const state = {
     cred: null,
@@ -21,37 +20,36 @@ export const mutations = {
 
 export const actions = {
     // signIn({ commit, ...rest }, payload) {
-    signIn({ commit, dispatch }, payload) {
-        signInWithEmailAndPassword(auth, payload.email, payload.password)
+    signIn({ commit }, payload) {
+        authentication
+            .login(payload.email, payload.password)
             .then((cred) => {
                 saveState("cred", cred);
                 commit("changeCred", cred);
             })
             .catch((err) => {
-                console.log(err.message);
-                // commit("alert/alert", { text: err.message }, { root: true });
-                dispatch("alert/alert", { text: err.message }, { root: true });
+                commit("alert/alert", { text: err.message }, { root: true });
             });
     },
     signUp({ commit }, payload) {
-        createUserWithEmailAndPassword(auth, payload.email, payload.password)
+        authentication
+            .signup(payload.email, payload.password)
             .then((cred) => {
                 saveState("cred", cred);
                 commit("changeCred", cred);
             })
             .catch((err) => {
-                console.log(err.message);
                 commit("alert/alert", { text: err.message }, { root: true });
             });
     },
     signOut({ commit }) {
-        signOut(auth)
+        authentication
+            .signout()
             .then(() => {
                 window.localStorage.removeItem("cred");
                 commit("changeCred", null);
             })
             .catch((err) => {
-                console.log(err.message);
                 commit("alert/alert", { text: err.message }, { root: true });
             });
     },
