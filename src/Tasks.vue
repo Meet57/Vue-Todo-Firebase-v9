@@ -63,14 +63,15 @@ export default {
         },
         submit(data) {
             if (data.id) {
-                this.$store.commit("task/updateTodo", {
+                this.$store.dispatch("task/updateTodo", {
                     todo: data.todo,
                     id: data.id,
                     color: data.color,
                     status: data.status,
                 });
             } else {
-                this.$store.commit("task/addTodo", data);
+                console.log(data);
+                this.$store.dispatch("task/addTodo", data);
             }
             this.visible = false;
             this.modelTodoData = null;

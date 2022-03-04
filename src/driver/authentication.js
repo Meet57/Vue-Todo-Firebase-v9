@@ -1,11 +1,12 @@
-import firebase from "../firebase";
+// import { login, signup, signout, currentuser } from "../firebase";
 
-const { auth, login, signup, signout } = firebase;
+import firebase from "../firebase";
+const { login, signup, signout, currentuser } = firebase;
 
 class Auth {
     constructor() {}
     getlogindetails() {
-        return auth.currentUser;
+        return currentuser;
     }
     login(email, pass) {
         return login(email, pass);

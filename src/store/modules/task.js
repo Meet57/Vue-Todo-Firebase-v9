@@ -1,4 +1,4 @@
-import { addDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import _ from "lodash";
 import { name } from "ntcjs";
 import Database from "../../driver/database";
@@ -58,20 +58,11 @@ export const mutations = {
         state.loading = true;
         db = null;
     },
-    addTodo(state, data) {
-        let colorName = name(data.color)[1];
-        addDoc(db, { ...data, colorName, createdAt: serverTimestamp() });
-    },
     getTodo(state, payload) {
         if (payload) {
             state.todos = payload;
             state.loading = false;
         }
-    },
-    updateTodo(state, payload) {
-        let docRef = doc(db, payload.id);
-        let colorName = name(payload.color)[1];
-        updateDoc(docRef, { ...payload, colorName: colorName });
     },
     toogleStatus(state, payload) {
         let docRef = doc(db, payload.id);
@@ -82,17 +73,30 @@ export const mutations = {
 export const actions = {
     getTodo({ commit }) {
         database.read().then((value) => {
-            let todos = [];
-            let i = 1;
-            value.docs.forEach((doc) => {
-                todos.push({ ...doc.data(), id: doc.id, number: i });
-                i++;
-            });
-            commit("getTodo", todos);
+            commit("getTodo", value);
         });
     },
-    deleteTodo(context, payload) {
-        database.detete(payload.id);
+    deleteTodo({ dispatch }, payload) {
+        database.deletedoc(payload.id).then(() => {
+            dispatch("getTodo");
+        });
+    },
+    addTodo({ dispatch }, paylaod) {
+        let colorName = name(paylaod.color)[1];
+        database.add({ ...paylaod, colorName, createdAt: serverTimestamp() }).then(() => {
+            dispatch("getTodo");
+        });
+    },
+    updateTodo({ dispatch }, payload) {
+        let colorName = name(payload.color)[1];
+        database.updatedoc({ ...payload, colorName: colorName }).then(() => {
+            dispatch("getTodo");
+        });
+    },
+    toogleStatus({ dispatch }, payload) {
+        database.updatedoc({ ...payload, status: !payload.status }).then(() => {
+            dispatch("getTodo");
+        });
     },
 };
 

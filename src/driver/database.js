@@ -1,31 +1,20 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import firebase from "../firebase";
-const { db, auth } = firebase;
+const { read, deletedoc, adddoc, updatedoc } = firebase;
 
 class Database {
     user = null;
     constructor() {}
     read() {
-        return new Promise((resolve) => {
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    this.user = collection(doc(collection(db, "user"), user.uid), "tasks");
-                    onSnapshot(this.user, (snapshot) => {
-                        // let todos = [];
-                        // let i = 1;
-                        // snapshot.docs.forEach((doc) => {
-                        //     todos.push({ ...doc.data(), id: doc.id, number: i });
-                        //     i++;
-                        // });
-                        resolve(snapshot);
-                    });
-                }
-            });
-        });
+        return read();
     }
-    detete(id) {
-        deleteDoc(doc(this.user, id));
+    deletedoc(id) {
+        return deletedoc(id);
+    }
+    add(data) {
+        return adddoc(data);
+    }
+    updatedoc(data) {
+        return updatedoc(data);
     }
 }
 export default Database;

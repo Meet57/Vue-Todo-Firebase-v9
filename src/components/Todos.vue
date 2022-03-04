@@ -209,7 +209,7 @@ export default {
             this.$store.dispatch("task/deleteTodo", { id });
         },
         toggleStatus(id, status) {
-            this.$store.commit("task/toogleStatus", { id, status });
+            this.$store.dispatch("task/toogleStatus", { id, status });
         },
         callback(key) {
             this.tab = key;

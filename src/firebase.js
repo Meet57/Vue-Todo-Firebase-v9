@@ -1,6 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+    getFirestore,
+    collection,
+    doc,
+    getDocs,
+    deleteDoc,
+    addDoc,
+    updateDoc,
+} from "firebase/firestore";
 import {
     createUserWithEmailAndPassword,
     getAuth,
@@ -25,6 +33,11 @@ initializeApp(firebaseConfig);
 
 const db = getFirestore();
 const auth = getAuth();
+
+let id = null;
+if (localStorage.getItem("cred")) {
+    id = JSON.parse(localStorage.getItem("cred")).user.uid;
+}
 
 const login = (email, pass) => {
     return new Promise((resolve, reject) => {
@@ -62,4 +75,75 @@ const signout = () => {
     });
 };
 
-export default { db, login, signup, signout, auth };
+const currentuser = () => {
+    return auth.currentUser;
+};
+
+// Database
+
+const read = () => {
+    return new Promise((resolve, reject) => {
+        let user = collection(doc(collection(db, "user"), id), "tasks");
+        getDocs(user)
+            .then((docs) => {
+                let arr = [];
+                let i = 1;
+                docs.forEach((doc) => {
+                    arr.push({ ...doc.data(), id: doc.id, number: i });
+                    i++;
+                });
+                resolve(arr);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+const deletedoc = (docid) => {
+    let user = collection(doc(collection(db, "user"), id), "tasks");
+    return new Promise((resolve, reject) => {
+        deleteDoc(doc(user, docid))
+            .then(() => resolve())
+            .catch((err) => reject(err));
+    });
+};
+
+const adddoc = (data) => {
+    let user = collection(doc(collection(db, "user"), id), "tasks");
+    return new Promise((resolve, reject) => {
+        addDoc(user, data)
+            .then(() => {
+                resolve();
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+const updatedoc = (data) => {
+    let user = doc(collection(doc(collection(db, "user"), id), "tasks"), data.id);
+    return new Promise((resolve, reject) => {
+        updateDoc(user, data)
+            .then(() => {
+                resolve();
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+export default {
+    db,
+    login,
+    signup,
+    signout,
+    currentuser,
+    read,
+    deletedoc,
+    adddoc,
+    updatedoc,
+    auth,
+};
