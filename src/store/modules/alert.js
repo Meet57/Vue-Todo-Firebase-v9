@@ -10,20 +10,23 @@ export const getters = {
 
 export const mutations = {
     alert(state, payload) {
-        state.alert = paylaod.text;
+        state.alert = payload.text;
         console.log(payload.text);
         setTimeout(() => {
             state.alert = "";
         }, 3000);
     },
+    changealert(state, payload) {
+        state.alert = payload;
+    },
 };
 
 export const actions = {
     alert({ commit }, payload) {
-        commit("alert", payload.text);
+        commit("changealert", payload.text);
         console.log(payload.text);
         setTimeout(() => {
-            commit("alert", "");
+            commit("changealert", "");
         }, 3000);
     },
 };
