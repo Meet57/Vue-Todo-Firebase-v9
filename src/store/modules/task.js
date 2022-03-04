@@ -1,9 +1,7 @@
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 import _ from "lodash";
 import { name } from "ntcjs";
 import Database from "../../driver/database";
-
-var db = null;
 
 const database = new Database();
 
@@ -56,17 +54,12 @@ export const mutations = {
     resetDefault(state) {
         state.todos = [];
         state.loading = true;
-        db = null;
     },
     getTodo(state, payload) {
         if (payload) {
             state.todos = payload;
             state.loading = false;
         }
-    },
-    toogleStatus(state, payload) {
-        let docRef = doc(db, payload.id);
-        updateDoc(docRef, { status: !payload.status });
     },
 };
 
@@ -76,27 +69,19 @@ export const actions = {
             commit("getTodo", value);
         });
     },
-    deleteTodo({ dispatch }, payload) {
-        database.deletedoc(payload.id).then(() => {
-            dispatch("getTodo");
-        });
+    deleteTodo(context, payload) {
+        database.deletedoc(payload.id);
     },
-    addTodo({ dispatch }, paylaod) {
+    addTodo(context, paylaod) {
         let colorName = name(paylaod.color)[1];
-        database.add({ ...paylaod, colorName, createdAt: serverTimestamp() }).then(() => {
-            dispatch("getTodo");
-        });
+        database.add({ ...paylaod, colorName, createdAt: serverTimestamp() });
     },
-    updateTodo({ dispatch }, payload) {
+    updateTodo(context, payload) {
         let colorName = name(payload.color)[1];
-        database.updatedoc({ ...payload, colorName: colorName }).then(() => {
-            dispatch("getTodo");
-        });
+        database.updatedoc({ ...payload, colorName: colorName });
     },
-    toogleStatus({ dispatch }, payload) {
-        database.updatedoc({ ...payload, status: !payload.status }).then(() => {
-            dispatch("getTodo");
-        });
+    toogleStatus(context, payload) {
+        database.updatedoc({ ...payload, status: !payload.status });
     },
 };
 

@@ -4,10 +4,10 @@ import {
     getFirestore,
     collection,
     doc,
-    getDocs,
     deleteDoc,
     addDoc,
     updateDoc,
+    onSnapshot,
 } from "firebase/firestore";
 import {
     createUserWithEmailAndPassword,
@@ -15,10 +15,8 @@ import {
     signInWithEmailAndPassword,
     signOut,
 } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { store } from "./store/store";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAX3Zl2fHs_WYFf8KY8i5J0GgeXTqPH7Zo",
     authDomain: "vue-firebase-b8455.firebaseapp.com",
@@ -84,19 +82,35 @@ const currentuser = () => {
 const read = () => {
     return new Promise((resolve, reject) => {
         let user = collection(doc(collection(db, "user"), id), "tasks");
-        getDocs(user)
-            .then((docs) => {
-                let arr = [];
+        // getDocs(user)
+        //     .then((docs) => {
+        //         let arr = [];
+        //         let i = 1;
+        //         docs.forEach((doc) => {
+        //             arr.push({ ...doc.data(), id: doc.id, number: i });
+        //             i++;
+        //         });
+        //         resolve(arr);
+        //     })
+        //     .catch((err) => {
+        //         reject(err);
+        //     });
+        onSnapshot(
+            user,
+            (docs) => {
+                let aa = [];
                 let i = 1;
                 docs.forEach((doc) => {
-                    arr.push({ ...doc.data(), id: doc.id, number: i });
+                    aa.push({ ...doc.data(), id: doc.id, number: i });
                     i++;
                 });
-                resolve(arr);
-            })
-            .catch((err) => {
+                store.commit("task/getTodo", aa);
+                resolve(aa);
+            },
+            (err) => {
                 reject(err);
-            });
+            }
+        );
     });
 };
 
