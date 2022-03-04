@@ -5,6 +5,7 @@ import "./tailwind.css";
 import "./assets/tailwind.css";
 import "ant-design-vue/dist/antd.css";
 import Antd from "ant-design-vue";
+import router from './router'
 
 Vue.config.productionTip = false;
 Vue.use(store);
@@ -12,5 +13,6 @@ Vue.use(Antd);
 
 new Vue({
     render: (h) => h(App),
-    store: store,
+    router,
+    store: store
 }).$mount("#app");

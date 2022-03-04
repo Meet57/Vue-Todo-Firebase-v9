@@ -8,6 +8,8 @@ import {
     addDoc,
     updateDoc,
     onSnapshot,
+    query,
+    orderBy,
 } from "firebase/firestore";
 import {
     createUserWithEmailAndPassword,
@@ -32,15 +34,17 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 const auth = getAuth();
 
-let id = null;
+var cred = null;
+
 if (localStorage.getItem("cred")) {
-    id = JSON.parse(localStorage.getItem("cred")).user.uid;
+    cred = JSON.parse(localStorage.getItem("cred"));
 }
 
 const login = (email, pass) => {
     return new Promise((resolve, reject) => {
         signInWithEmailAndPassword(auth, email, pass)
             .then((user) => {
+                cred = user;
                 resolve(user);
             })
             .catch((err) => {
@@ -53,6 +57,7 @@ const signup = (email, pass) => {
     return new Promise((resolve, reject) => {
         createUserWithEmailAndPassword(auth, email, pass)
             .then((user) => {
+                cred = user;
                 resolve(user);
             })
             .catch((err) => {
@@ -65,6 +70,7 @@ const signout = () => {
     return new Promise((resolve, reject) => {
         signOut(auth)
             .then(() => {
+                cred = null;
                 resolve();
             })
             .catch((err) => {
@@ -81,7 +87,6 @@ const currentuser = () => {
 
 const read = () => {
     return new Promise((resolve, reject) => {
-        let user = collection(doc(collection(db, "user"), id), "tasks");
         // getDocs(user)
         //     .then((docs) => {
         //         let arr = [];
@@ -95,8 +100,10 @@ const read = () => {
         //     .catch((err) => {
         //         reject(err);
         //     });
+        let user = collection(doc(collection(db, "user"), cred.user.uid), "tasks");
+        let q = query(user, orderBy("createdAt"));
         onSnapshot(
-            user,
+            q,
             (docs) => {
                 let aa = [];
                 let i = 1;
@@ -115,7 +122,7 @@ const read = () => {
 };
 
 const deletedoc = (docid) => {
-    let user = collection(doc(collection(db, "user"), id), "tasks");
+    let user = collection(doc(collection(db, "user"), cred.user.uid), "tasks");
     return new Promise((resolve, reject) => {
         deleteDoc(doc(user, docid))
             .then(() => resolve())
@@ -124,7 +131,7 @@ const deletedoc = (docid) => {
 };
 
 const adddoc = (data) => {
-    let user = collection(doc(collection(db, "user"), id), "tasks");
+    let user = collection(doc(collection(db, "user"), cred.user.uid), "tasks");
     return new Promise((resolve, reject) => {
         addDoc(user, data)
             .then(() => {
@@ -137,7 +144,7 @@ const adddoc = (data) => {
 };
 
 const updatedoc = (data) => {
-    let user = doc(collection(doc(collection(db, "user"), id), "tasks"), data.id);
+    let user = doc(collection(doc(collection(db, "user"), cred.user.uid), "tasks"), data.id);
     return new Promise((resolve, reject) => {
         updateDoc(user, data)
             .then(() => {

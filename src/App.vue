@@ -1,22 +1,26 @@
 <template>
     <div>
         <alert />
-        <login-page v-if="cred == null" />
-        <tasks v-else />
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import loginPage from "./LoginPage.vue";
-import tasks from "./Tasks.vue";
 import alert from "./components/Alert.vue";
 import { mapGetters } from "vuex";
 
 export default {
     components: {
-        "login-page": loginPage,
-        tasks,
         alert,
+    },
+    watch: {
+        cred(value) {
+            if (value) {
+                this.$router.push("/todos");
+            } else {
+                this.$router.push("/");
+            }
+        },
     },
     computed: {
         ...mapGetters("auth", ["cred"]),

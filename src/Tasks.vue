@@ -82,8 +82,12 @@ export default {
     },
     computed: {
         ...mapGetters("task", ["numberOftodos", "incompleteTask"]),
+        ...mapGetters("auth", ["cred"]),
     },
     created() {
+        if (this.cred == null) {
+            this.$router.push("/");
+        }
         this.$store.dispatch("task/getTodo");
     },
 };

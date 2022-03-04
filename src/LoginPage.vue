@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     data() {
         return {
@@ -71,6 +73,14 @@ export default {
                 password: "",
             },
         };
+    },
+    computed: {
+        ...mapGetters("auth", ["cred"]),
+    },
+    created() {
+        if (this.cred) {
+            this.$router.push("/todos");
+        }
     },
     methods: {
         SignIn() {
