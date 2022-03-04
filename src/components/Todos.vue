@@ -206,7 +206,7 @@ export default {
     },
     methods: {
         deleteTodo(id) {
-            this.$store.commit("task/deleteTodo", { id });
+            this.$store.dispatch("task/deleteTodo", { id });
         },
         toggleStatus(id, status) {
             this.$store.commit("task/toogleStatus", { id, status });

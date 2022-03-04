@@ -83,7 +83,7 @@ export default {
         ...mapGetters("task", ["numberOftodos", "incompleteTask"]),
     },
     created() {
-        this.$store.commit("task/getTodo");
+        this.$store.dispatch("task/getTodo");
     },
 };
 </script>

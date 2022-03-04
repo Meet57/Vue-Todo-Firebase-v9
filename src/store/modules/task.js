@@ -1,20 +1,11 @@
-import {
-    addDoc,
-    deleteDoc,
-    doc,
-    onSnapshot,
-    updateDoc,
-    serverTimestamp,
-    query,
-    orderBy,
-    collection,
-} from "firebase/firestore";
-import firebase from "../../firebase";
+import { addDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import _ from "lodash";
 import { name } from "ntcjs";
+import Database from "../../driver/database";
 
-var firestore = firebase.db;
 var db = null;
+
+const database = new Database();
 
 export const state = {
     todos: [],
@@ -65,29 +56,17 @@ export const mutations = {
     resetDefault(state) {
         state.todos = [];
         state.loading = true;
+        db = null;
     },
     addTodo(state, data) {
         let colorName = name(data.color)[1];
         addDoc(db, { ...data, colorName, createdAt: serverTimestamp() });
     },
-    getTodo(state) {
-        let user = doc(
-            collection(firestore, "user"),
-            JSON.parse(localStorage.getItem("cred")).user.uid
-        );
-        // let user = doc(collection(firestore, "user"),auth.currentUser.uid);
-        db = collection(user, "tasks");
-        const q = query(db, orderBy("createdAt"));
-        onSnapshot(q, (snapshot) => {
-            let todos = [];
-            let i = 1;
-            snapshot.docs.forEach((doc) => {
-                todos.push({ ...doc.data(), id: doc.id, number: i });
-                i++;
-            });
-            state.todos = todos;
+    getTodo(state, payload) {
+        if (payload) {
+            state.todos = payload;
             state.loading = false;
-        });
+        }
     },
     updateTodo(state, payload) {
         let docRef = doc(db, payload.id);
@@ -98,9 +77,22 @@ export const mutations = {
         let docRef = doc(db, payload.id);
         updateDoc(docRef, { status: !payload.status });
     },
-    deleteTodo(state, payload) {
-        var docRef = doc(db, payload.id);
-        deleteDoc(docRef);
+};
+
+export const actions = {
+    getTodo({ commit }) {
+        database.read().then((value) => {
+            let todos = [];
+            let i = 1;
+            value.docs.forEach((doc) => {
+                todos.push({ ...doc.data(), id: doc.id, number: i });
+                i++;
+            });
+            commit("getTodo", todos);
+        });
+    },
+    deleteTodo(context, payload) {
+        database.detete(payload.id);
     },
 };
 
