@@ -59,8 +59,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { SIGNIN, SIGNUP } from "./store/modules/helper";
+import { authActions, authGetters } from "./store/modules/auth/helper";
 
 export default {
     data() {
@@ -72,14 +71,15 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("auth", ["cred"]),
+        ...authGetters,
     },
     created() {
-        if (this.cred) {
+        if (this.CRED) {
             this.$router.push("/todos");
         }
     },
     methods: {
+        ...authActions,
         tabChange() {
             this.form = {
                 email: "",
@@ -87,10 +87,10 @@ export default {
             };
         },
         SignIn() {
-            this.$store.dispatch(SIGNIN, this.form);
+            this.SIGNIN(this.form);
         },
         SignUp() {
-            this.$store.dispatch(SIGNUP, this.form);
+            this.SIGNUP(this.form);
         },
     },
 };

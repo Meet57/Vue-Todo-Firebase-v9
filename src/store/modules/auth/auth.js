@@ -1,4 +1,8 @@
-import Auth from "../../driver/authentication";
+import Auth from "../../../driver/authentication";
+import { ACTIONS, GETTERS } from "./types";
+
+const { SIGNIN, SIGNOUT, SIGNUP } = ACTIONS;
+const { CRED } = GETTERS;
 
 const authentication = new Auth();
 
@@ -7,7 +11,7 @@ export const state = {
 };
 
 export const getters = {
-    cred(state) {
+    [CRED](state) {
         return state.cred;
     },
 };
@@ -20,7 +24,7 @@ export const mutations = {
 
 export const actions = {
     // signIn({ commit, ...rest }, payload) {
-    signIn({ commit }, payload) {
+    [SIGNIN]({ commit }, payload) {
         authentication
             .login(payload.email, payload.password)
             .then((cred) => {
@@ -31,7 +35,7 @@ export const actions = {
                 commit("alert/alert", { text: err.message }, { root: true });
             });
     },
-    signUp({ commit }, payload) {
+    [SIGNUP]({ commit }, payload) {
         authentication
             .signup(payload.email, payload.password)
             .then((cred) => {
@@ -42,7 +46,7 @@ export const actions = {
                 commit("alert/alert", { text: err.message }, { root: true });
             });
     },
-    signOut({ commit }) {
+    [SIGNOUT]({ commit }) {
         authentication
             .signout()
             .then(() => {

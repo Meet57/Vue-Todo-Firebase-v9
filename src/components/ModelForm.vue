@@ -34,7 +34,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { ALERT } from "../store/modules/helper";
+import { alertActions } from "../store/modules/alert/helper";
 
 export default {
     props: {
@@ -50,9 +50,6 @@ export default {
     },
     computed: {
         ...mapGetters("task", ["allTodos"]),
-        // allTodos() {
-        //     return this.$store.getters.allTodos;
-        // },
     },
     data() {
         return {
@@ -61,6 +58,7 @@ export default {
         };
     },
     methods: {
+        ...alertActions,
         closeModel() {
             this.visible = false;
             setTimeout(() => {
@@ -86,10 +84,10 @@ export default {
                         this.$emit("submit", this.task);
                     }, 400);
                 } else {
-                    this.$store.dispatch(ALERT, { text: "Todo Repeated" });
+                    this.ALERT({ text: "Todo Repeated" });
                 }
             } else {
-                this.$store.dispatch(ALERT, { text: "Please enter todo title" });
+                this.ALERT({ text: "Please enter todo title" });
             }
         },
     },

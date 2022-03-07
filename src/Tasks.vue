@@ -31,7 +31,8 @@
 import todos from "./components/Todos";
 import modelForm from "./components/ModelForm";
 import { mapGetters } from "vuex";
-import { UPDATETODO, ADDTODO, SIGNOUT, GETTODO } from "./store/modules/helper";
+import { authActions, authGetters } from "./store/modules/auth/helper";
+import { UPDATETODO, ADDTODO, GETTODO } from "./store/modules/helper";
 
 export default {
     name: "Main",
@@ -46,6 +47,7 @@ export default {
         "model-form": modelForm,
     },
     methods: {
+        ...authActions,
         toogleModel() {
             if (this.visible) {
                 this.modelTodoData = null;
@@ -77,15 +79,15 @@ export default {
             this.modelTodoData = null;
         },
         signOut() {
-            this.$store.dispatch(SIGNOUT);
+            this.SIGNOUT();
         },
     },
     computed: {
+        ...authGetters,
         ...mapGetters("task", ["numberOftodos", "incompleteTask"]),
-        ...mapGetters("auth", ["cred"]),
     },
     created() {
-        if (this.cred == null) {
+        if (this.CRED == null) {
             this.$router.push("/");
         }
         this.$store.dispatch(GETTODO);

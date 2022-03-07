@@ -1,9 +1,11 @@
+import { ACTIONS, GETTERS } from "./types";
+
 export const state = {
     alert: "",
 };
 
 export const getters = {
-    alert(state) {
+    [GETTERS.ALERT](state) {
         return state.alert;
     },
 };
@@ -21,7 +23,7 @@ export const mutations = {
 };
 
 export const actions = {
-    alert({ commit }, payload) {
+    [ACTIONS.ALERT]({ commit }, payload) {
         commit("changealert", payload.text);
         setTimeout(() => {
             commit("changealert", "");

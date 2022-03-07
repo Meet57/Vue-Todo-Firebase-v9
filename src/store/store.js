@@ -2,8 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import * as task from "./modules/task";
-import * as auth from "./modules/auth";
-import * as alert from "./modules/alert";
+import * as auth from "./modules/auth/auth";
+import * as alert from "./modules/alert/alert";
 
 Vue.use(Vuex);
 

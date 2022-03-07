@@ -7,14 +7,14 @@
 
 <script>
 import alert from "./components/Alert.vue";
-import { mapGetters } from "vuex";
+import { authGetters } from "./store/modules/auth/helper";
 
 export default {
     components: {
         alert,
     },
     watch: {
-        cred(value) {
+        CRED(value) {
             if (value) {
                 this.$router.push("/todos");
             } else {
@@ -23,7 +23,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters("auth", ["cred"]),
+        ...authGetters,
     },
 };
 </script>
