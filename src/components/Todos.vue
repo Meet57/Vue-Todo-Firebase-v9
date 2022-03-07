@@ -27,8 +27,8 @@
         </div>
 
         <!-- Tabs -->
-        <div v-if="loading" class="mt-5 w-full flex justify-center">
-            <a-spin size="large" class="" tip="Loading..." />
+        <div v-if="LOADING" class="mt-5 w-full flex justify-center">
+            <a-spin size="large" class="" tip="LOADING..." />
         </div>
         <div v-else>
             <a-tabs default-active-key="incomplete" @change="callback" :tabBarStyle="{ margin: 0 }">
@@ -38,13 +38,13 @@
                         <span
                             class="ml-2 bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900"
                         >
-                            {{ incompletedTasks.length }}
+                            {{ INCOMPLETEDTASKS.length }}
                         </span>
                     </template>
                     <!-- Table -->
                     <a-table
                         :columns="columns"
-                        :data-source="getincompletedTasks"
+                        :data-source="getINCOMPLETEDTASKS"
                         :pagination="{ pageSize: 10 }"
                         :scroll="{ y: 450 }"
                         :rowKey="(t) => t.id"
@@ -87,13 +87,13 @@
                         <span
                             class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900"
                         >
-                            {{ completedTasks.length }}
+                            {{ COMPLETEDTASKS.length }}
                         </span>
                     </template>
                     <!-- Table -->
                     <a-table
                         :columns="columns"
-                        :data-source="getcompletedTasks"
+                        :data-source="getCOMPLETEDTASKS"
                         :pagination="{ pageSize: 20 }"
                         :scroll="{ y: 450 }"
                         :rowKey="(t) => t.id"
@@ -138,8 +138,7 @@
 
 <script>
 import CustomFilterVue from "./CustomFilter.vue";
-import { mapGetters } from "vuex";
-import { DELETETODO, TOOGLESTATUS } from "../store/modules/helper";
+import { taskActions, taskGetters, taskMutations } from "../store/modules/task/helper";
 
 const columns = [
     {
@@ -198,19 +197,21 @@ export default {
         };
     },
     watch: {
-        incompletedTaskColor(newv) {
+        INCOMPLETEDTASKCOLOR(newv) {
             this.incompleteFilter.list = newv;
         },
-        completedTaskColor(newv) {
+        COMPLETEDTASKCOLOR(newv) {
             this.completeFilter.list = newv;
         },
     },
     methods: {
+        ...taskActions,
+        ...taskMutations,
         deleteTodo(id) {
-            this.$store.dispatch(DELETETODO, { id });
+            this.DELETETODO({ id });
         },
         toggleStatus(id, status) {
-            this.$store.dispatch(TOOGLESTATUS, { id, status });
+            this.TOOGLESTATUS({ id, status });
         },
         callback(key) {
             this.tab = key;
@@ -220,6 +221,7 @@ export default {
         },
     },
     computed: {
+        ...taskGetters,
         filter: {
             get() {
                 return this.tab == "incomplete" ? this.incompleteFilter : this.completeFilter;
@@ -230,8 +232,8 @@ export default {
                     : (this.completeFilter = newValue);
             },
         },
-        getcompletedTasks() {
-            var list = this.completedTasks;
+        getCOMPLETEDTASKS() {
+            var list = this.COMPLETEDTASKS;
             const { colorList, searchText } = this.completeFilter;
             if (colorList.length) {
                 list = list.filter((t) => colorList.includes(t.color));
@@ -241,8 +243,8 @@ export default {
             }
             return list;
         },
-        getincompletedTasks() {
-            var list = this.incompletedTasks;
+        getINCOMPLETEDTASKS() {
+            var list = this.INCOMPLETEDTASKS;
             const { colorList, searchText } = this.incompleteFilter;
             if (colorList.length) {
                 list = list.filter((t) => colorList.includes(t.color));
@@ -252,16 +254,9 @@ export default {
             }
             return list;
         },
-        ...mapGetters("task", [
-            "completedTaskColor",
-            "incompletedTaskColor",
-            "incompletedTasks",
-            "completedTasks",
-            "loading",
-        ]),
     },
     beforeDestroy() {
-        this.$store.commit("task/resetDefault");
+        this.RESETDEFAULT();
     },
 };
 </script>

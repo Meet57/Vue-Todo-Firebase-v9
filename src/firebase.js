@@ -87,19 +87,6 @@ const currentuser = () => {
 
 const read = () => {
     return new Promise((resolve, reject) => {
-        // getDocs(user)
-        //     .then((docs) => {
-        //         let arr = [];
-        //         let i = 1;
-        //         docs.forEach((doc) => {
-        //             arr.push({ ...doc.data(), id: doc.id, number: i });
-        //             i++;
-        //         });
-        //         resolve(arr);
-        //     })
-        //     .catch((err) => {
-        //         reject(err);
-        //     });
         let user = collection(doc(collection(db, "user"), cred.user.uid), "tasks");
         let q = query(user, orderBy("createdAt"));
         onSnapshot(

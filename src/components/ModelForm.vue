@@ -33,8 +33,8 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import { alertActions } from "../store/modules/alert/helper";
+import { taskGetters } from "../store/modules/task/helper";
 
 export default {
     props: {
@@ -49,7 +49,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters("task", ["allTodos"]),
+        ...taskGetters,
     },
     data() {
         return {
@@ -69,7 +69,7 @@ export default {
             let todo = this.task.todo;
             let id = this.task.id || null;
             let update = true;
-            let alltodo = [...this.allTodos];
+            let alltodo = [...this.ALLTODOS];
             if (todo != "") {
                 alltodo.map((t) => {
                     if (t.todo.toUpperCase() == todo.toUpperCase()) {

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import * as task from "./modules/task";
+import * as task from "./modules/task/task";
 import * as auth from "./modules/auth/auth";
 import * as alert from "./modules/alert/alert";
 

@@ -1,9 +1,22 @@
 import { serverTimestamp } from "firebase/firestore";
 import _ from "lodash";
 import { name } from "ntcjs";
-import Database from "../../driver/database";
+import Database from "../../../driver/database";
+import { ACTIONS, GETTERS, MUTATIONS } from "./types";
 
 const database = new Database();
+const { ADDTODO, DELETETODO, GETTODO, TOOGLESTATUS, UPDATETODO } = ACTIONS;
+const {
+    ALLTODOS,
+    COMPLETEDTASKCOLOR,
+    COMPLETEDTASKS,
+    INCOMPLETEDTASKCOLOR,
+    INCOMPLETEDTASKS,
+    INCOMPLETETASK,
+    LOADING,
+    NUMBEROFTODOS,
+} = GETTERS;
+const { RESETDEFAULT } = MUTATIONS;
 
 export const state = {
     todos: [],
@@ -11,35 +24,35 @@ export const state = {
 };
 
 export const getters = {
-    numberOftodos(state) {
+    [NUMBEROFTODOS](state) {
         return state.todos.length;
     },
-    completedTasks(state) {
+    [COMPLETEDTASKS](state) {
         return state.todos.filter((todo) => todo.status).sort((a, b) => a.number - b.number);
     },
-    loading(state) {
+    [LOADING](state) {
         return state.loading;
     },
-    incompletedTasks(state) {
+    [INCOMPLETEDTASKS](state) {
         return state.todos.filter((todo) => !todo.status).sort((a, b) => a.number - b.number);
     },
-    incompletedTaskColor(state) {
+    [INCOMPLETEDTASKCOLOR](state) {
         let l = state.todos.map((todo) => {
             if (!todo.status) return { colorName: todo.colorName, color: todo.color };
         });
         return _.uniqBy(l, "color").filter((o) => o);
     },
-    completedTaskColor(state) {
+    [COMPLETEDTASKCOLOR](state) {
         let l = state.todos.map((todo) => {
             if (todo.status) return { colorName: todo.colorName, color: todo.color };
         });
 
         return _.uniqBy(l, "color").filter((o) => o);
     },
-    allTodos(state) {
+    [ALLTODOS](state) {
         return state.todos.sort((a, b) => (a.status == b.status ? 0 : a.status ? 1 : -1));
     },
-    incompleteTask(state) {
+    [INCOMPLETETASK](state) {
         let i = 0;
         state.todos.forEach((task) => {
             if (!task.status) {
@@ -51,7 +64,7 @@ export const getters = {
 };
 
 export const mutations = {
-    resetDefault(state) {
+    [RESETDEFAULT](state) {
         state.todos = [];
         state.loading = true;
     },
@@ -64,23 +77,21 @@ export const mutations = {
 };
 
 export const actions = {
-    getTodo({ commit }) {
-        database.read().then((value) => {
-            commit("getTodo", value);
-        });
+    [GETTODO]() {
+        database.read();
     },
-    deleteTodo(context, payload) {
+    [DELETETODO](context, payload) {
         database.deletedoc(payload.id);
     },
-    addTodo(context, paylaod) {
+    [ADDTODO](context, paylaod) {
         let colorName = name(paylaod.color)[1];
         database.add({ ...paylaod, colorName, createdAt: serverTimestamp() });
     },
-    updateTodo(context, payload) {
+    [UPDATETODO](context, payload) {
         let colorName = name(payload.color)[1];
         database.updatedoc({ ...payload, colorName: colorName });
     },
-    toogleStatus(context, payload) {
+    [TOOGLESTATUS](context, payload) {
         database.updatedoc({ ...payload, status: !payload.status });
     },
 };
