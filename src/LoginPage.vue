@@ -6,17 +6,17 @@
             </div>
         </div>
         <div class="container border-2 p-3 rounded-md border-yellow-900 mx-auto w-1/3 mt-24">
-            <a-tabs default-active-key="signin">
+            <a-tabs default-active-key="signin" @change="tabChange">
                 <a-tab-pane key="signin" tab="Sign In">
                     <a-input-group>
                         <a-input
-                            v-model="signin.email"
+                            v-model="form.email"
                             class="inputbox"
                             size="large"
                             placeholder="Email"
                         />
                         <a-input-password
-                            v-model="signin.password"
+                            v-model="form.password"
                             class="inputbox"
                             size="large"
                             placeholder="Password"
@@ -33,13 +33,13 @@
                 <a-tab-pane key="signup" tab="Sign Up">
                     <a-input-group>
                         <a-input
-                            v-model="signup.email"
+                            v-model="form.email"
                             class="inputbox"
                             size="large"
                             placeholder="Email"
                         />
                         <a-input-password
-                            v-model="signup.password"
+                            v-model="form.password"
                             class="inputbox"
                             size="large"
                             placeholder="Password"
@@ -60,15 +60,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { SIGNIN, SIGNUP } from "./store/modules/helper";
 
 export default {
     data() {
         return {
-            signin: {
-                email: "",
-                password: "",
-            },
-            signup: {
+            form: {
                 email: "",
                 password: "",
             },
@@ -83,11 +80,17 @@ export default {
         }
     },
     methods: {
+        tabChange() {
+            this.form = {
+                email: "",
+                password: "",
+            };
+        },
         SignIn() {
-            this.$store.dispatch("auth/signIn", this.signin);
+            this.$store.dispatch(SIGNIN, this.form);
         },
         SignUp() {
-            this.$store.dispatch("auth/signUp", this.signup);
+            this.$store.dispatch(SIGNUP, this.form);
         },
     },
 };

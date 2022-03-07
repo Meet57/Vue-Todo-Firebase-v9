@@ -139,6 +139,7 @@
 <script>
 import CustomFilterVue from "./CustomFilter.vue";
 import { mapGetters } from "vuex";
+import { DELETETODO, TOOGLESTATUS } from "../store/modules/helper";
 
 const columns = [
     {
@@ -206,10 +207,10 @@ export default {
     },
     methods: {
         deleteTodo(id) {
-            this.$store.dispatch("task/deleteTodo", { id });
+            this.$store.dispatch(DELETETODO, { id });
         },
         toggleStatus(id, status) {
-            this.$store.dispatch("task/toogleStatus", { id, status });
+            this.$store.dispatch(TOOGLESTATUS, { id, status });
         },
         callback(key) {
             this.tab = key;

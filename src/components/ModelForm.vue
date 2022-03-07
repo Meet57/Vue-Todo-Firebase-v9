@@ -34,6 +34,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { ALERT } from "../store/modules/helper";
 
 export default {
     props: {
@@ -85,10 +86,10 @@ export default {
                         this.$emit("submit", this.task);
                     }, 400);
                 } else {
-                    this.$store.dispatch("alert/alert", { text: "Todo Repeated" });
+                    this.$store.dispatch(ALERT, { text: "Todo Repeated" });
                 }
             } else {
-                this.$store.dispatch("alert/alert", { text: "Please enter todo title" });
+                this.$store.dispatch(ALERT, { text: "Please enter todo title" });
             }
         },
     },

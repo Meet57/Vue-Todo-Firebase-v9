@@ -31,6 +31,7 @@
 import todos from "./components/Todos";
 import modelForm from "./components/ModelForm";
 import { mapGetters } from "vuex";
+import { UPDATETODO, ADDTODO, SIGNOUT, GETTODO } from "./store/modules/helper";
 
 export default {
     name: "Main",
@@ -63,21 +64,20 @@ export default {
         },
         submit(data) {
             if (data.id) {
-                this.$store.dispatch("task/updateTodo", {
+                this.$store.dispatch(UPDATETODO, {
                     todo: data.todo,
                     id: data.id,
                     color: data.color,
                     status: data.status,
                 });
             } else {
-                console.log(data);
-                this.$store.dispatch("task/addTodo", data);
+                this.$store.dispatch(ADDTODO, data);
             }
             this.visible = false;
             this.modelTodoData = null;
         },
         signOut() {
-            this.$store.dispatch("auth/signOut");
+            this.$store.dispatch(SIGNOUT);
         },
     },
     computed: {
@@ -88,7 +88,7 @@ export default {
         if (this.cred == null) {
             this.$router.push("/");
         }
-        this.$store.dispatch("task/getTodo");
+        this.$store.dispatch(GETTODO);
     },
 };
 </script>
