@@ -1,9 +1,0 @@
-export const SIGNIN = "auth/signIn";
-export const SIGNUP = "auth/signUp";
-export const SIGNOUT = "auth/signOut";
-export const DELETETODO = "task/deleteTodo";
-export const TOOGLESTATUS = "task/toogleStatus";
-export const ALERT = "alert/alert";
-export const UPDATETODO = "task/updateTodo";
-export const ADDTODO = "task/addTodo";
-export const GETTODO = "task/getTodo";

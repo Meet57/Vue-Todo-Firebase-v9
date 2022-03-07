@@ -144,7 +144,6 @@ const updatedoc = (data) => {
 };
 
 export default {
-    db,
     login,
     signup,
     signout,
@@ -153,5 +152,4 @@ export default {
     deletedoc,
     adddoc,
     updatedoc,
-    auth,
 };
